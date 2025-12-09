@@ -138,6 +138,8 @@ body.loaded .load-item {
     /* Above menu dropdown */
     position: relative;
     transition: background-color 0.3s;
+    position: relative;
+    /* Ensure relative for absolute lines */
 }
 
 /* Hamburger Lines */
@@ -145,8 +147,25 @@ body.loaded .load-item {
     width: 30px;
     height: 2px;
     background-color: #fff;
-    transition: width 0.3s ease, transform 0.4s ease, opacity 0.3s ease;
+    transition: width 0.3s ease, transform 0.4s ease, opacity 0.3s ease, top 0.4s ease;
     transform-origin: center;
+    position: absolute;
+    /* Changed to absolute for perfect centering */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* Centered by default */
+}
+
+/* Spacing for default lines */
+.line-1 {
+    transform: translate(-50%, -8px);
+    /* Move up */
+}
+
+.line-2 {
+    transform: translate(-50%, 4px);
+    /* Move down */
 }
 
 .menu-trigger:hover .line {
@@ -154,13 +173,14 @@ body.loaded .load-item {
 }
 
 /* === ACTIVE STATE: Lines become X === */
+/* Reset translation and apply rotation */
 .menu-container.active .menu-trigger .line-1 {
-    transform: rotate(45deg) translateY(4px);
+    transform: translate(-50%, -50%) rotate(45deg);
     width: 20px;
 }
 
 .menu-container.active .menu-trigger .line-2 {
-    transform: rotate(-45deg) translateY(-4px);
+    transform: translate(-50%, -50%) rotate(-45deg);
     width: 20px;
 }
 
@@ -193,7 +213,8 @@ body.loaded .load-item {
     clip-path: inset(0 0 100% 100%);
     /* Hidden: clipped from bottom-left */
     transition: clip-path 0.5s cubic-bezier(0.4, 0.0, 0.2, 1),
-        opacity 0.1s ease,
+        opacity 0.2s ease 0.3s,
+        /* Delayed fade out on close */
         visibility 0.5s;
 }
 
@@ -202,6 +223,9 @@ body.loaded .load-item {
     visibility: visible;
     clip-path: inset(0 0 0 0);
     /* Fully revealed */
+    transition: clip-path 0.5s cubic-bezier(0.4, 0.0, 0.2, 1),
+        opacity 0.1s ease 0s,
+        visibility 0s;
 }
 
 /* No separate close button needed now, trigger IS the close button */
@@ -667,8 +691,13 @@ body.loaded .load-item {
     }
 
     .menu-dropdown {
-        width: 100%;
-        min-height: 100vh;
+        width: 100vw;
+        /* Full width */
+        height: 100vh;
+        /* Full height */
+        right: auto;
+        left: 0;
+        top: 0;
     }
 
     .project-grid {
