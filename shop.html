@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | REGALO</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .shop-layout {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: var(--spacing-lg);
+            padding-top: 120px;
+            /* Space for fixed header */
+        }
+
+        .filters {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .filter-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .filter-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: var(--spacing-sm);
+            display: block;
+        }
+
+        .filter-list {
+            list-style: none;
+        }
+
+        .filter-list li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .filter-list li:hover {
+            color: #000;
+        }
+
+        .filter-list li.active {
+            color: #000;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .shop-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                display: none;
+                /* Hide filters on mobile for simplicity in this version */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Regalo</a>
+            <ul class="nav-links">
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#" class="cart-count">Bag (0)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container shop-layout">
+        <aside class="filters fade-in">
+            <div class="filter-group">
+                <span class="filter-title">Category</span>
+                <ul class="filter-list">
+                    <li class="active">View All</li>
+                    <li>Totes</li>
+                    <li>Crossbody</li>
+                    <li>Clutches</li>
+                    <li>Travel</li>
+                </ul>
+            </div>
+            <div class="filter-group">
+                <span class="filter-title">Color</span>
+                <ul class="filter-list">
+                    <li>Black</li>
+                    <li>Tan</li>
+                    <li>White</li>
+                    <li>Olive</li>
+                </ul>
+            </div>
+        </aside>
+
+        <section class="product-grid">
+            <!-- Product 1 -->
+            <a href="product.html" class="product-card fade-in">
+                <div class="product-image">
+                    <img src="assets/bag-1.png" alt="Tan Crossbody">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">Tan Crossbody</span>
+                    <span class="product-price">€290</span>
+                </div>
+            </a>
+
+            <!-- Product 2 -->
+            <a href="product.html" class="product-card fade-in">
+                <div class="product-image">
+                    <img src="assets/bag-2.png" alt="White Clutch">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">White Clutch</span>
+                    <span class="product-price">€180</span>
+                </div>
+            </a>
+
+            <!-- Product 3 -->
+            <a href="product.html" class="product-card fade-in">
+                <div class="product-image">
+                    <img src="assets/bag-1.png" alt="Classic Tote">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">Classic Tote</span>
+                    <span class="product-price">€450</span>
+                </div>
+            </a>
+
+            <!-- Product 4 -->
+            <a href="product.html" class="product-card fade-in">
+                <div class="product-image">
+                    <img src="assets/bag-2.png" alt="Mini Satchel">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">Mini Satchel</span>
+                    <span class="product-price">€220</span>
+                </div>
+            </a>
+
+            <!-- Product 5 -->
+            <a href="product.html" class="product-card fade-in">
+                <div class="product-image">
+                    <img src="assets/bag-1.png" alt="Weekender">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">Weekender</span>
+                    <span class="product-price">€580</span>
+                </div>
+            </a>
+        </section>
+    </main>
+
+    <footer class="container">
+        <div class="footer-content">
+            <div>
+                <div class="footer-logo">Regalo</div>
+                <p>Designed for longevity.</p>
+            </div>
+            <div>
+                <ul class="footer-links">
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Pinterest</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Returns</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

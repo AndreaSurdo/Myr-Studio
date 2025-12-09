@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart | Myr-Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Cart Page Specific */
+        .cart-page {
+            background-color: #fff;
+            color: #000;
+            min-height: 100vh;
+            padding: 150px 40px 80px 40px;
+        }
+
+        .cart-title {
+            font-size: 4rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            margin-bottom: 60px;
+            letter-spacing: -2px;
+        }
+
+        .cart-empty {
+            font-size: 1.5rem;
+            color: #666;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item-img {
+            width: 120px;
+            height: 150px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-size: 1.5rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            font-size: 1.2rem;
+            color: #666;
+            font-style: italic;
+            font-family: serif;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: 1px solid #000;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .cart-item-remove:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .cart-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+            border-top: 2px solid #000;
+        }
+
+        .cart-total {
+            font-size: 2rem;
+            font-weight: 400;
+        }
+
+        .checkout-btn {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: background-color 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background-color: #333;
+        }
+
+        .continue-shopping {
+            display: inline-block;
+            margin-top: 30px;
+            font-size: 1rem;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body class="is-loading">
+
+    <!-- Header - FORCED LIGHT THEME (Black Text) -->
+    <header class="site-header light-theme-active">
+        <a href="index.html" class="logo load-item">Myr-Studio</a>
+
+        <div class="header-right load-item">
+            <a href="cart.html" class="cart-link" id="cart-link">Cart (<span id="cart-count">0</span>)</a>
+
+            <div class="menu-container">
+                <div class="menu-trigger" id="menu-trigger">
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                </div>
+
+                <nav class="menu-dropdown" id="menu-dropdown">
+                    <ul class="nav-links">
+                        <li><a href="index.html#home" class="menu-link">Home</a></li>
+                        <li><a href="index.html#work" class="menu-link">Work</a></li>
+                        <li><a href="index.html#savoir" class="menu-link">Savoir-Faire</a></li>
+                        <li><a href="index.html#heritage" class="menu-link">Heritage</a></li>
+                        <li><a href="index.html#work" class="menu-link">Shop</a></li>
+                        <li><a href="index.html#contact" class="menu-link">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="scroll-container">
+        <section class="cart-page">
+            <h1 class="cart-title load-item">Your Cart</h1>
+
+            <div id="cart-content">
+                <!-- Dynamically populated -->
+            </div>
+
+            <a href="index.html#work" class="continue-shopping load-item">← Continue Shopping</a>
+        </section>
+
+        <footer class="minimal-footer" style="background: #fff; color: #000; padding: 40px;">
+            <p>&copy; 2024 Myr-Studio.</p>
+        </footer>
+    </main>
+
+    <script src="lenis.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function renderCart() {
+            const cartContent = document.getElementById('cart-content');
+            const cartItems = JSON.parse(localStorage.getItem('myr_cart_items') || '[]');
+
+            if (cartItems.length === 0) {
+                cartContent.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
+                return;
+            }
+
+            let total = 0;
+            let itemsHtml = '<div class="cart-items">';
+
+            cartItems.forEach((item, index) => {
+                // Parse price (remove € and comma)
+                const priceNum = parseFloat(item.price.replace('€', '').replace(',', '').trim());
+                total += priceNum;
+
+                itemsHtml += `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.title}" class="cart-item-img" onerror="this.style.backgroundColor='#ccc'">
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.title}</div>
+                            <div class="cart-item-price">${item.price}</div>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${index})">Remove</button>
+                    </div>
+                `;
+            });
+
+            itemsHtml += '</div>';
+
+            itemsHtml += `
+                <div class="cart-summary">
+                    <div class="cart-total">Total: € ${total.toLocaleString('de-DE', { minimumFractionDigits: 2 })}</div>
+                    <button class="checkout-btn" onclick="alert('Checkout coming soon!')">Checkout</button>
+                </div>
+            `;
+
+            cartContent.innerHTML = itemsHtml;
+        }
+
+        window.removeFromCart = function (index) {
+            let cartItems = JSON.parse(localStorage.getItem('myr_cart_items') || '[]');
+            cartItems.splice(index, 1);
+            localStorage.setItem('myr_cart_items', JSON.stringify(cartItems));
+            localStorage.setItem('myr_cart_count', cartItems.length);
+
+            // Update header count
+            const countEl = document.getElementById('cart-count');
+            if (countEl) countEl.innerText = cartItems.length;
+
+            renderCart();
+        }
+
+        // Render on load
+        renderCart();
+    </script>
+</body>
+
+</html>

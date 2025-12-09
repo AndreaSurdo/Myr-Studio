@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product | Myr-Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="is-loading">
+
+    <!-- Header - FORCED LIGHT THEME (Black Text) for product pages -->
+    <header class="site-header light-theme-active">
+        <a href="index.html" class="logo load-item">Myr-Studio</a>
+
+        <div class="header-right load-item">
+            <a href="cart.html" class="cart-link" id="cart-link">Cart (<span id="cart-count">0</span>)</a>
+
+            <div class="menu-container">
+                <div class="menu-trigger" id="menu-trigger">
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                </div>
+
+                <nav class="menu-dropdown" id="menu-dropdown">
+                    <ul class="nav-links">
+                        <li><a href="index.html#home" class="menu-link">Home</a></li>
+                        <li><a href="index.html#work" class="menu-link">Work</a></li>
+                        <li><a href="index.html#savoir" class="menu-link">Savoir-Faire</a></li>
+                        <li><a href="index.html#heritage" class="menu-link">Heritage</a></li>
+                        <li><a href="index.html#work" class="menu-link">Shop</a></li>
+                        <li><a href="index.html#contact" class="menu-link">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="scroll-container">
+        <section class="product-page">
+            <div class="product-hero">
+                <div class="product-image-col">
+                    <div class="product-img-wrapper reveal-on-scroll">
+                        <img id="p-image" src="" alt="Product Image">
+                    </div>
+                </div>
+                <div class="product-details-col">
+                    <div class="product-info-wrapper reveal-on-scroll delay-1">
+                        <span class="product-collection" id="p-year">Collection 2024</span>
+                        <h1 class="product-title" id="p-title">Product Name</h1>
+                        <p class="product-price" id="p-price">€ --</p>
+
+                        <div class="product-desc">
+                            <p id="p-desc">Description loading...</p>
+                        </div>
+
+                        <button class="add-to-cart-btn" id="add-to-cart-btn">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="minimal-footer" style="background: #fff; color: #000; padding: 40px;">
+            <p>&copy; 2024 Myr-Studio.</p>
+        </footer>
+    </main>
+
+    <script src="lenis.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const products = {
+            '1': {
+                title: 'Tan Crossbody',
+                year: '2024',
+                price: '€ 850.00',
+                priceNum: 850,
+                image: 'assets/bag-1.png',
+                desc: 'A masterclass in restraint. This crossbody features vegetable-tanned leather that ages gracefully, mirroring the journey of its owner. Structured yet supple.'
+            },
+            '2': {
+                title: 'White Clutch',
+                year: '2024',
+                price: '€ 620.00',
+                priceNum: 620,
+                image: 'assets/bag-2.png',
+                desc: 'Purity in form. The White Clutch is designed for evening elegance. Minimalist hardware ensures the silhouette remains the focal point.'
+            },
+            '3': {
+                title: 'Noir Collection',
+                year: '2023',
+                price: '€ 1,200.00',
+                priceNum: 1200,
+                image: 'assets/bag-3.png',
+                desc: 'Maximum impact, zero noise. Deepest black leather saturated with dye for an abyss-like finish. The ultimate statement of power.'
+            },
+            '4': {
+                title: 'Urban Utility',
+                year: '2023',
+                price: '€ 550.00',
+                priceNum: 550,
+                image: 'assets/bag-4.png',
+                desc: 'Engineered for the metropolis. Technical fabrics meet artisanal construction. Water-resistant, durable, and unapologetically modern.'
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        const product = products[id];
+
+        if (product) {
+            document.title = `${product.title} | Myr-Studio`;
+            document.getElementById('p-title').innerText = product.title;
+            document.getElementById('p-year').innerText = product.year;
+            document.getElementById('p-price').innerText = product.price;
+            document.getElementById('p-desc').innerText = product.desc;
+            document.getElementById('p-image').src = product.image;
+        } else {
+            document.getElementById('p-title').innerText = "Product Not Found";
+        }
+
+        document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+            if (product) {
+                addToCartItem(id, product.title, product.price, product.image);
+            }
+        });
+
+    </script>
+</body>
+
+</html>

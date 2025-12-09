@@ -1,0 +1,715 @@
+:root {
+    --bg-color: #f7f7f7;
+    --text-color: #1a1a1a;
+    --accent-color: #000;
+    --font-primary: 'Inter', sans-serif;
+    --menu-bg: #000;
+    --menu-text: #fff;
+}
+
+/* Base & Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html.lenis {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.3s;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* --- Loading Animation State --- */
+.load-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+body.loaded .load-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Header */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    transition: color 0.3s ease;
+    color: #fff;
+}
+
+.site-header.light-theme-active {
+    color: #000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    pointer-events: auto;
+}
+
+/* Header Right Area */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.cart-link {
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-right: -10px;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* ========================================
+   MENU CONTAINER - MORPHING EFFECT
+   ======================================== */
+.menu-container {
+    position: relative;
+    pointer-events: auto;
+}
+
+/* 
+   MENU TRIGGER - This is the 60x60 black square.
+   When active, it will visually expand via a pseudo-element or sibling,
+   while the lines morph into an X.
+*/
+.menu-trigger {
+    width: 60px;
+    height: 60px;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    z-index: 110;
+    /* Above menu dropdown */
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+/* Hamburger Lines */
+.line {
+    width: 30px;
+    height: 2px;
+    background-color: #fff;
+    transition: width 0.3s ease, transform 0.4s ease, opacity 0.3s ease;
+    transform-origin: center;
+}
+
+.menu-trigger:hover .line {
+    width: 20px;
+}
+
+/* === ACTIVE STATE: Lines become X === */
+.menu-container.active .menu-trigger .line-1 {
+    transform: rotate(45deg) translateY(4px);
+    width: 20px;
+}
+
+.menu-container.active .menu-trigger .line-2 {
+    transform: rotate(-45deg) translateY(-4px);
+    width: 20px;
+}
+
+
+/* 
+   MENU DROPDOWN - Appears to expand FROM the trigger.
+   We use clip-path or transform-origin for the "grow" effect.
+*/
+.menu-dropdown {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 450px;
+    height: auto;
+    min-height: 450px;
+    background-color: #000;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 105;
+    /* Below trigger so X is visible */
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    overflow: hidden;
+
+    /* MORPHING ANIMATION: 
+       Start small at top-right (where trigger is) and expand.
+       Using clip-path for a clean reveal. */
+    clip-path: inset(0 0 100% 100%);
+    /* Hidden: clipped from bottom-left */
+    transition: clip-path 0.5s cubic-bezier(0.4, 0.0, 0.2, 1),
+        opacity 0.1s ease,
+        visibility 0.5s;
+}
+
+.menu-container.active .menu-dropdown {
+    opacity: 1;
+    visibility: visible;
+    clip-path: inset(0 0 0 0);
+    /* Fully revealed */
+}
+
+/* No separate close button needed now, trigger IS the close button */
+.menu-close-btn {
+    display: none;
+    /* Hidden, we use the morphing lines instead */
+}
+
+
+.nav-links {
+    list-style: none;
+    text-align: left;
+    margin-top: 130px;
+    padding: 0 40px 40px 40px;
+}
+
+.menu-link {
+    display: block;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 0px;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    opacity: 0;
+    transform: translateX(15px);
+    position: relative;
+    padding-left: 0;
+    white-space: nowrap;
+    transition: padding-left 0.3s, opacity 0.4s ease, transform 0.4s ease;
+}
+
+.menu-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 2px;
+    background-color: #fff;
+    transition: width 0.3s ease;
+}
+
+.menu-link:hover {
+    padding-left: 30px;
+    color: #fff;
+}
+
+.menu-link:hover::before {
+    width: 20px;
+}
+
+.menu-container.active .menu-link {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.menu-container.active .menu-link:nth-child(1) {
+    transition-delay: 0.15s;
+}
+
+.menu-container.active .menu-link:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.menu-container.active .menu-link:nth-child(3) {
+    transition-delay: 0.25s;
+}
+
+.menu-container.active .menu-link:nth-child(4) {
+    transition-delay: 0.3s;
+}
+
+.menu-container.active .menu-link:nth-child(5) {
+    transition-delay: 0.35s;
+}
+
+.menu-container.active .menu-link:nth-child(6) {
+    transition-delay: 0.4s;
+}
+
+
+/* Sections */
+.section {
+    padding: 100px 40px;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Hero */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.hero-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.centered-hero {
+    text-align: center;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 8vw;
+    line-height: 1;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+/* Sticky Savoir-Faire */
+.sticky-section {
+    background-color: #111;
+    color: #fff;
+}
+
+.sticky-wrapper {
+    display: flex;
+    gap: 40px;
+}
+
+.sticky-title {
+    flex: 0 0 40%;
+    position: sticky;
+    top: 150px;
+    height: 100px;
+}
+
+.section-title {
+    font-size: 4rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.sticky-content {
+    flex: 1;
+    padding-bottom: 250px;
+}
+
+.scroll-text-block {
+    margin-bottom: 300px;
+    opacity: 0.1;
+    filter: blur(10px);
+    transition: opacity 0.3s, filter 0.3s;
+}
+
+.block-number {
+    font-size: 1rem;
+    color: #666;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.scroll-text-block h3 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.scroll-text-block p {
+    font-size: 1.2rem;
+    color: #999;
+    max-width: 500px;
+    line-height: 1.5;
+}
+
+/* Heritage */
+.heritage-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #fff;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.heritage-bg-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.heritage-bg {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    opacity: 0.4;
+    transform: translateY(-10%);
+}
+
+.heritage-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 800px;
+}
+
+.heritage-title {
+    font-size: 5vw;
+    margin-bottom: 50px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.heritage-text-cols p {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    line-height: 1.4;
+}
+
+/* Work */
+.work-section {
+    background-color: #f7f7f7;
+    color: #000;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+    margin-top: 60px;
+}
+
+.project-card {
+    cursor: pointer;
+}
+
+.project-image-wrapper {
+    overflow: hidden;
+    margin-bottom: 20px;
+    aspect-ratio: 4/5;
+}
+
+.project-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s ease;
+}
+
+.project-card:hover img {
+    transform: scale(1.05);
+}
+
+.project-info {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* Contact */
+.contact-section {
+    background-color: #fff;
+    color: #000;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.contact-link {
+    font-size: 5vw;
+    font-weight: 700;
+    display: block;
+    margin: 40px 0;
+    text-decoration: underline;
+}
+
+/* --- Product / Shop Page Styles --- */
+.product-page {
+    background-color: #fff;
+    color: #000;
+    min-height: 100vh;
+    padding-top: 120px;
+}
+
+.product-hero {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 80vh;
+}
+
+.product-image-col {
+    flex: 1 1 50%;
+    padding: 0 40px 40px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-img-wrapper {
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 4/5;
+    background-color: #f0f0f0;
+    overflow: hidden;
+}
+
+.product-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.product-img-wrapper:hover img {
+    transform: scale(1.05);
+}
+
+.product-details-col {
+    flex: 1 1 40%;
+    padding: 0 40px 40px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-collection {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.product-title {
+    font-size: 4rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 20px;
+    letter-spacing: -2px;
+}
+
+.product-price {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 40px;
+    font-family: serif;
+    font-style: italic;
+}
+
+.product-desc {
+    max-width: 400px;
+    margin-bottom: 60px;
+}
+
+.product-desc p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+}
+
+.add-to-cart-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: fit-content;
+    transition: background-color 0.3s, transform 0.2s;
+    letter-spacing: 1px;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+.add-to-cart-btn:active {
+    transform: translateY(0);
+}
+
+
+/* Animations */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal-on-scroll.active-scroll {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scrub-slide-up {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 1s, transform 1s;
+}
+
+.scrub-slide-up.active-scroll {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delay-1 {
+    transition-delay: 0.1s;
+}
+
+.delay-2 {
+    transition-delay: 0.2s;
+}
+
+.delay-3 {
+    transition-delay: 0.3s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .site-header {
+        padding: 20px;
+    }
+
+    .header-right {
+        gap: 15px;
+    }
+
+    .cart-link {
+        font-size: 0.9rem;
+    }
+
+    .menu-dropdown {
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    .project-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-title {
+        font-size: 12vw;
+    }
+
+    .sticky-wrapper {
+        flex-direction: column;
+    }
+
+    .sticky-title {
+        position: sticky;
+        top: 80px;
+        margin-bottom: 50px;
+        background: #111;
+        z-index: 10;
+        padding-bottom: 20px;
+    }
+
+    .scroll-text-block {
+        margin-bottom: 150px;
+    }
+
+    /* Product */
+    .product-page {
+        padding-top: 100px;
+    }
+
+    .product-image-col {
+        padding: 0 20px 20px 20px;
+    }
+
+    .product-details-col {
+        padding: 0 20px 40px 20px;
+    }
+
+    .product-title {
+        font-size: 2.5rem;
+    }
+}

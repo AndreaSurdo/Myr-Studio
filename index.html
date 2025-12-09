@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myr-Studio | Creative Agency</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="is-loading">
+
+    <!-- Header -->
+    <header class="site-header">
+        <a href="#home" class="logo load-item">Myr-Studio</a>
+
+        <div class="header-right load-item">
+            <!-- Cart Link (Hidden until items added? Or always visible?) -->
+            <a href="cart.html" class="cart-link" id="cart-link">Cart (<span id="cart-count">0</span>)</a>
+
+            <div class="menu-container">
+                <div class="menu-trigger" id="menu-trigger">
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                </div>
+
+                <!-- Menu Popover -->
+                <nav class="menu-dropdown" id="menu-dropdown">
+                    <div class="menu-close-btn" id="menu-close-btn">
+                        <span class="close-line"></span>
+                        <span class="close-line"></span>
+                    </div>
+                    <!-- Added top spacer for aesthetics if needed, or margin on ul -->
+                    <ul class="nav-links">
+                        <li><a href="#home" class="menu-link">Home</a></li>
+                        <li><a href="#work" class="menu-link">Work</a></li>
+                        <li><a href="#savoir" class="menu-link">Savoir-Faire</a></li>
+                        <li><a href="#heritage" class="menu-link">Heritage</a></li>
+                        <li><a href="#work" class="menu-link">Shop</a></li>
+                        <!-- Shop goes to work section for simplicity, or separate page? Linking to work/projects -->
+                        <li><a href="#contact" class="menu-link">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="scroll-container">
+
+        <!-- Section 1: Home/Hero -->
+        <section id="home" class="section hero-section" data-theme="dark">
+            <div class="hero-bg-container load-item" style="transition-delay: 0.2s;">
+                <img src="assets/hero.png" alt="Myr-Studio Hero" class="hero-bg-img" id="hero-img">
+                <div class="hero-overlay-gradient"></div>
+            </div>
+            <div class="content-wrapper centered-hero">
+                <h1 class="hero-title load-item" style="transition-delay: 0.4s;">Myr-Studio</h1>
+                <p class="hero-subtitle load-item" style="transition-delay: 0.6s;">Digital craftsmanship for the modern
+                    era.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Sticky Savoir-Faire (Updated Layout) -->
+        <section id="savoir" class="section sticky-section" data-theme="dark">
+            <div class="sticky-wrapper">
+                <div class="sticky-title">
+                    <h2 class="section-title reveal-on-scroll">Savoir-<br>Faire</h2>
+                </div>
+
+                <div class="sticky-content">
+                    <div class="scroll-text-block scrub-blur">
+                        <span class="block-number">01.</span>
+                        <h3>Philosophy</h3>
+                        <p>We believe in the power of absence. By removing the unnecessary, we highlight the essential
+                            truth of the brand.</p>
+                    </div>
+                    <div class="scroll-text-block scrub-blur">
+                        <span class="block-number">02.</span>
+                        <h3>Method</h3>
+                        <p>Every pixel is placed with intention. Our process is a rigorous journey of reduction until
+                            only the pure form remains.</p>
+                    </div>
+                    <div class="scroll-text-block scrub-blur">
+                        <span class="block-number">03.</span>
+                        <h3>Vision</h3>
+                        <p>To create digital spaces that feel like physical sanctuaries. Quiet, profound, and enduring.
+                        </p>
+                    </div>
+                    <div class="scroll-text-block scrub-blur">
+                        <span class="block-number">04.</span>
+                        <h3>Execution</h3>
+                        <p>Bridging the gap between art and utility. We engineer experiences that are as seamless as
+                            they are beautiful.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Heritage (Parallax) -->
+        <section id="heritage" class="section heritage-section" data-theme="dark">
+            <div class="heritage-bg-wrapper">
+                <img src="assets/bag-2.png" alt="Heritage Background" class="heritage-bg">
+            </div>
+            <div class="heritage-content">
+                <h2 class="heritage-title scrub-slide-up">Our Heritage</h2>
+                <div class="heritage-text-cols">
+                    <p class="scrub-slide-up delay-1">Founded in the digital ether, Myr-Studio began as a reaction
+                        against the noise of the modern web. We sought silence.</p>
+                    <p class="scrub-slide-up delay-2">We construct digital architectures that stand the test of time,
+                        prioritizing clarity over clutter, and purpose over trend.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Work (Shop) -->
+        <section id="work" class="section work-section" data-theme="light">
+            <div class="content-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title reveal-on-scroll">Selected Work</h2>
+                    <p class="section-desc reveal-on-scroll delay-1">Curated projects. Click to shop.</p>
+                </div>
+
+                <div class="project-grid">
+                    <!-- Project 1 -->
+                    <div class="project-card reveal-on-scroll delay-2"
+                        onclick="window.location.href='product.html?id=1'">
+                        <div class="project-image-wrapper">
+                            <img src="assets/bag-1.png" alt="Project One">
+                        </div>
+                        <div class="project-info">
+                            <span class="project-name">Tan Crossbody</span>
+                            <span class="project-year">€ 850</span>
+                        </div>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="project-card reveal-on-scroll delay-3"
+                        onclick="window.location.href='product.html?id=2'">
+                        <div class="project-image-wrapper">
+                            <img src="assets/bag-2.png" alt="Project Two">
+                        </div>
+                        <div class="project-info">
+                            <span class="project-name">White Clutch</span>
+                            <span class="project-year">€ 620</span>
+                        </div>
+                    </div>
+                    <!-- Project 3 -->
+                    <div class="project-card reveal-on-scroll delay-2"
+                        onclick="window.location.href='product.html?id=3'">
+                        <div class="project-image-wrapper">
+                            <img src="assets/bag-3.png" alt="Project Three"
+                                onerror="this.src='//via.placeholder.com/600x800?text=Noir'">
+                        </div>
+                        <div class="project-info">
+                            <span class="project-name">Noir Collection</span>
+                            <span class="project-year">€ 1,200</span>
+                        </div>
+                    </div>
+                    <!-- Project 4 -->
+                    <div class="project-card reveal-on-scroll delay-3"
+                        onclick="window.location.href='product.html?id=4'">
+                        <div class="project-image-wrapper">
+                            <img src="assets/bag-4.png" alt="Project Four"
+                                onerror="this.src='//via.placeholder.com/600x800?text=Urban'">
+                        </div>
+                        <div class="project-info">
+                            <span class="project-name">Urban Utility</span>
+                            <span class="project-year">€ 550</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Contact -->
+        <section id="contact" class="section contact-section" data-theme="light">
+            <div class="content-wrapper">
+                <h2 class="section-title reveal-on-scroll">Contact</h2>
+                <div class="contact-links reveal-on-scroll">
+                    <a href="mailto:hello@myrstudio.com" class="contact-link"
+                        style="display:block;margin:40px 0;font-size:5vw;text-decoration: underline;">hello@myrstudio.com</a>
+                    <div class="socials">
+                        <a href="#">Instagram</a>
+                        <a href="#">LinkedIn</a>
+                    </div>
+                </div>
+                <footer class="minimal-footer">
+                    <p>&copy; 2024 Myr-Studio. All rights reserved.</p>
+                </footer>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="lenis.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Fallback for missing images
+        document.querySelectorAll('img').forEach(img => {
+            img.onerror = function () {
+                this.style.backgroundColor = '#1a1a1a';
+                this.style.display = 'block';
+                this.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22200%22%20height%3D%22200%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1%20%7Bfill%3A%23333%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3A%22%23333%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2274%22%20y%3D%22104%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E';
+            }
+        });
+    </script>
+</body>
+
+</html>
