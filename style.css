@@ -691,13 +691,29 @@ body.loaded .load-item {
     }
 
     .menu-dropdown {
-        width: 100vw;
-        /* Full width */
-        height: 100vh;
-        /* Full height */
-        right: auto;
-        left: 0;
+        width: calc(100vw - 60px);
+        /* Full width minus trigger width */
+        height: auto;
+        min-height: auto;
+        left: auto;
+        right: 0;
         top: 0;
+    }
+
+    .nav-links {
+        text-align: center;
+        padding: 20px;
+        margin-top: 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 5px;
+    }
+
+    .menu-link {
+        font-size: 1.8rem;
+        margin-bottom: 0;
     }
 
     .project-grid {
