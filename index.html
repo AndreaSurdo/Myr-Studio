@@ -65,6 +65,7 @@
 
         <!-- Section 2: Sticky Savoir-Faire (Updated Layout) -->
         <section id="savoir" class="section sticky-section" data-theme="dark">
+            <canvas id="savoir-canvas" class="savoir-canvas"></canvas>
             <div class="sticky-wrapper">
                 <div class="sticky-title">
                     <h2 class="section-title reveal-on-scroll">Savoir-<br>Faire</h2>
@@ -196,6 +197,160 @@
 
     <script src="lenis.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Savoir-Faire Canvas Animation
+        (function () {
+            let parameters = {
+                size: 30,
+                radius: 1,
+                proximity: 125,
+                growth: 60,
+                ease: 0.075
+            };
+
+            class Point {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                }
+            }
+
+            class Circle {
+                constructor(radius, x, y) {
+                    this._radius = radius;
+                    this.radius = radius;
+                    this.growthValue = 0;
+                    this.position = new Point(x, y);
+                }
+
+                draw(context, ease) {
+                    this.radius += ((this._radius + this.growthValue) - (this.radius)) * ease;
+                    context.moveTo(this.position.x, this.position.y);
+                    context.arc(this.position.x, this.position.y, this.radius, 0, 2 * Math.PI);
+                }
+
+                addRadius(value) {
+                    this.growthValue = value;
+                }
+
+                get x() {
+                    return this.position.x;
+                }
+
+                set x(value) {
+                    this.position.x = value;
+                }
+
+                get y() {
+                    return this.position.y;
+                }
+
+                set y(value) {
+                    this.position.y = value;
+                }
+            }
+
+            function initSavoirCanvas() {
+                const canvas = document.getElementById("savoir-canvas");
+                if (!canvas) return;
+
+                const section = document.getElementById("savoir");
+                let circles = [];
+                const context = canvas.getContext("2d");
+
+                window.addEventListener("resize", resizeHandler);
+                window.addEventListener("mousemove", mouseMoveHandler);
+                window.addEventListener("touchmove", touchMoveHandler);
+
+                resizeHandler();
+                build();
+                animate();
+
+                function build() {
+                    circles = [];
+                    const { size, radius } = parameters;
+                    const columns = Math.ceil(canvas.width / size) + 1;
+                    const rows = Math.ceil(canvas.height / size) + 1;
+                    const amount = Math.ceil(columns * rows);
+                    for (let i = 0; i < amount; i++) {
+                        const column = i % columns;
+                        const row = ~~(i / columns);
+                        circles.push(new Circle(radius, size * column, size * row));
+                    }
+                }
+
+                function mouseMoveHandler(event) {
+                    const rect = section.getBoundingClientRect();
+                    // Only respond to mouse if it's over the savoir section
+                    if (event.clientY >= rect.top && event.clientY <= rect.bottom) {
+                        const relativeX = event.clientX;
+                        const relativeY = event.clientY - rect.top;
+                        proximityHandler({ clientX: relativeX, clientY: relativeY });
+                    }
+                }
+
+                function touchMoveHandler(event) {
+                    const rect = section.getBoundingClientRect();
+                    const touch = event.touches[0];
+                    if (touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
+                        const relativeX = touch.clientX;
+                        const relativeY = touch.clientY - rect.top;
+                        proximityHandler({ clientX: relativeX, clientY: relativeY });
+                    }
+                }
+
+                function proximityHandler(event) {
+                    const { proximity, growth } = parameters;
+                    for (let c of circles) {
+                        let distance = Math.sqrt(Math.pow(c.x - event.clientX, 2) + Math.pow(c.y - event.clientY, 2));
+                        let d = map(distance, c._radius, c._radius + proximity, growth, 0);
+                        if (d < 0) d = 0;
+                        c.addRadius(d);
+                    }
+                }
+
+                function animate() {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.save();
+                    context.beginPath();
+                    context.fillStyle = "#ADADAD";
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    for (let circle of circles) {
+                        circle.draw(context, parameters.ease);
+                    }
+                    context.fill();
+                    context.restore();
+                    requestAnimationFrame(animate);
+                }
+
+                function resizeHandler() {
+                    const rect = section.getBoundingClientRect();
+                    canvas.width = window.innerWidth;
+                    canvas.height = rect.height;
+                    build();
+                }
+
+                function normalize(value, min, max) {
+                    return (value - min) / (max - min);
+                }
+
+                function interpolate(value, min, max) {
+                    return min + (max - min) * value;
+                }
+
+                function map(value, min1, max1, min2, max2) {
+                    return interpolate(normalize(value, min1, max1), min2, max2);
+                }
+            }
+
+            // Initialize when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initSavoirCanvas);
+            } else {
+                initSavoirCanvas();
+            }
+        })();
+    </script>
     <script>
         // Fallback for missing images
         document.querySelectorAll('img').forEach(img => {
