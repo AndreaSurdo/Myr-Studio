@@ -18,9 +18,6 @@
         <a href="#home" class="logo load-item">Myr-Studio</a>
 
         <div class="header-right load-item">
-            <!-- Cart Link (Hidden until items added? Or always visible?) -->
-            <a href="cart.html" class="cart-link" id="cart-link">Cart (<span id="cart-count">0</span>)</a>
-
             <div class="menu-container">
                 <div class="menu-trigger" id="menu-trigger">
                     <span class="line line-1"></span>
@@ -33,15 +30,14 @@
                         <span class="close-line"></span>
                         <span class="close-line"></span>
                     </div>
-                    <!-- Added top spacer for aesthetics if needed, or margin on ul -->
                     <ul class="nav-links">
                         <li><a href="#home" class="menu-link">Home</a></li>
                         <li><a href="#work" class="menu-link">Work</a></li>
                         <li><a href="#savoir" class="menu-link">Savoir-Faire</a></li>
                         <li><a href="#heritage" class="menu-link">Heritage</a></li>
                         <li><a href="#work" class="menu-link">Shop</a></li>
-                        <!-- Shop goes to work section for simplicity, or separate page? Linking to work/projects -->
                         <li><a href="#contact" class="menu-link">Contact</a></li>
+                        <li><a href="cart.html" class="menu-link">Cart (<span id="cart-count">0</span>)</a></li>
                     </ul>
                 </nav>
             </div>
@@ -56,6 +52,9 @@
             <div class="hero-bg-container load-item" style="transition-delay: 0.2s;">
                 <img src="assets/hero.png" alt="Myr-Studio Hero" class="hero-bg-img" id="hero-img">
                 <div class="hero-overlay-gradient"></div>
+                <!-- Black curtain reveals -->
+                <div class="hero-curtain hero-curtain-left"></div>
+                <div class="hero-curtain hero-curtain-right"></div>
             </div>
             <div class="content-wrapper centered-hero">
                 <h1 class="hero-title load-item" style="transition-delay: 0.4s;">Myr-Studio</h1>

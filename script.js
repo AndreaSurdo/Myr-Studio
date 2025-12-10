@@ -1,5 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // 0. Split Title for Animation
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle) {
+        const text = heroTitle.textContent;
+        heroTitle.innerHTML = '';
+        text.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.className = 'title-letter';
+            span.style.transitionDelay = `${0.3 + (index * 0.05)}s`;
+            heroTitle.appendChild(span);
+        });
+    }
+
     // 1. CRITICAL: Show page immediately
     setTimeout(() => {
         document.body.classList.remove('is-loading');
