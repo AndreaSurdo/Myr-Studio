@@ -799,6 +799,114 @@ body.loaded .hero-curtain-right {
     transition-delay: 0.2s;
 }
 
+/* --- General Static Page Styles (Contact/Sustainability) --- */
+.page-content {
+    min-height: 100vh;
+    padding: 160px 40px 100px 40px;
+    /* Top padding clears header */
+    max-width: 1200px;
+    margin: 0 auto;
+    color: #fff;
+    background-color: #111;
+    /* Fallback/Ensure dark theme */
+}
+
+.dark-theme {
+    background-color: #111;
+    color: #fff;
+}
+
+.page-title {
+    font-size: 6rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 80px;
+    line-height: 1;
+}
+
+/* Text Layout (Sustainability) */
+.text-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 80px;
+}
+
+.text-section h2 {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: #adadad;
+    /* Brand accent grey */
+    text-transform: uppercase;
+}
+
+.text-section p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #ccc;
+    font-weight: 300;
+}
+
+/* Contact Layout */
+.center-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 80vh;
+    /* Center vertically */
+}
+
+.contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 80px;
+}
+
+.info-block h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.info-block .contact-link {
+    font-size: 2rem;
+    font-weight: 300;
+    text-decoration: none;
+    display: block;
+    margin: 0 0 10px 0;
+    color: #fff;
+    transition: color 0.3s;
+}
+
+.info-block .contact-link:hover {
+    color: #adadad;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 15vw;
+    }
+
+    .contact-info {
+        flex-direction: column;
+        gap: 50px;
+    }
+
+    .text-grid {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+}
+
 .delay-3 {
     transition-delay: 0.3s;
 }

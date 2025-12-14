@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainability - Myr-Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-banner {
+            width: 100%;
+            height: 60vh;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 80px;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+
+        .hero-banner-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 60px 40px;
+            background: linear-gradient(transparent, #111);
+        }
+
+        .hero-banner-title {
+            font-size: 5rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 40px;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 300;
+            color: #adadad;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-banner-title {
+                font-size: 12vw;
+            }
+        }
+    </style>
+</head>
+
+<body class="dark-theme">
+
+    <!-- Header (Copied from index.html) -->
+    <header class="site-header">
+        <a href="index.html" class="logo">Myr-Studio</a>
+
+        <div class="header-right">
+            <div class="menu-container">
+                <div class="menu-trigger" id="menu-trigger">
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                </div>
+
+                <!-- Menu Popover -->
+                <nav class="menu-dropdown" id="menu-dropdown">
+                    <div class="menu-close-btn" id="menu-close-btn">
+                        <span class="close-line"></span>
+                        <span class="close-line"></span>
+                    </div>
+                    <ul class="nav-links">
+                        <li><a href="index.html" class="menu-link">Home</a></li>
+                        <li><a href="index.html#work" class="menu-link">Work</a></li>
+                        <li><a href="index.html#savoir" class="menu-link">Savoir-Faire</a></li>
+                        <li><a href="sustainability.html" class="menu-link">Sustainability</a></li>
+                        <li><a href="contact.html" class="menu-link">Contact</a></li>
+                        <li><a href="cart.html" class="menu-link">Cart (<span id="cart-count">0</span>)</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+        <img src="assets/sustainability-hero.png" alt="Sustainability">
+        <div class="hero-banner-overlay">
+            <h1 class="hero-banner-title">Sustainability</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="page-content" style="padding-top: 0;">
+
+        <!-- Stats Section -->
+        <div class="stat-grid reveal-on-scroll">
+            <div class="stat-item">
+                <span class="stat-number" data-target="100" data-suffix="%">0%</span>
+                <span class="stat-label">Vegetable-Tanned Leather</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="0" data-suffix="">0</span>
+                <span class="stat-label">Plastic Packaging</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="50" data-suffix="km">0km</span>
+                <span class="stat-label">Max Supply Chain Distance</span>
+            </div>
+        </div>
+
+        <!-- Text Sections -->
+        <div class="text-grid">
+            <section class="text-section reveal-on-scroll">
+                <h2>Our Ethos</h2>
+                <p>We believe that true luxury lies in longevity. Myr-Studio objects are designed to age with you,
+                    acquiring character rather than obsolescence. We reject the cycle of fast fashion in favor of slow,
+                    deliberate creation.</p>
+                <p style="margin-top: 20px; color: #888;">Each piece is built to last generations, not seasons. This is
+                    our commitment to you and to the planet.</p>
+            </section>
+
+            <section class="text-section reveal-on-scroll">
+                <h2>Materials</h2>
+                <p>Our materials are sourced with an unwavering commitment to quality and ethics. We use
+                    vegetable-tanned leathers that minimize chemical impact and recycled fabrics where performance meets
+                    our aesthetic standards.</p>
+                <p style="margin-top: 20px; color: #888;">Every supplier is vetted. Every hide is traceable.
+                    Transparency is non-negotiable.</p>
+            </section>
+
+            <section class="text-section reveal-on-scroll">
+                <h2>Production</h2>
+                <p>Every piece is handcrafted in Italy by artisans who are paid fairly and treated with dignity. By
+                    keeping our production local, we reduce our carbon footprint and ensure meticulous oversight of
+                    every detail.</p>
+                <p style="margin-top: 20px; color: #888;">Our atelier in Rome operates on 100% renewable energy. Waste
+                    leather is repurposed into small goods and accessories.</p>
+            </section>
+        </div>
+
+        <!-- Closing Statement -->
+        <div class="reveal-on-scroll"
+            style="text-align: center; margin: 100px 0 60px 0; max-width: 700px; margin-left: auto; margin-right: auto;">
+            <h2 style="font-size: 2rem; font-weight: 300; color: #adadad; margin-bottom: 30px;">Our Promise</h2>
+            <p style="font-size: 1.3rem; line-height: 1.8; color: #ccc;">We are not perfect, but we are committed.
+                Sustainability is a journey, not a destination. We continuously audit our practices, seek better
+                alternatives, and hold ourselves accountable.</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="minimal-footer"
+        style="padding: 40px; text-align: center; background: #111; color: #666; border-top: 1px solid #222;">
+        <p>&copy; 2024 Myr-Studio. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Count-up animation for stats
+        function animateCountUp() {
+            const stats = document.querySelectorAll('.stat-number[data-target]');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const target = parseInt(el.dataset.target);
+                        const suffix = el.dataset.suffix || '';
+                        const duration = 2000; // ms
+                        const steps = 60;
+                        const stepTime = duration / steps;
+                        let current = 0;
+
+                        const timer = setInterval(() => {
+                            current += target / steps;
+                            if (current >= target) {
+                                current = target;
+                                clearInterval(timer);
+                            }
+                            el.textContent = Math.floor(current) + suffix;
+                        }, stepTime);
+
+                        observer.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            stats.forEach(stat => observer.observe(stat));
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', animateCountUp);
+        } else {
+            animateCountUp();
+        }
+    </script>
+</body>
+
+</html>
