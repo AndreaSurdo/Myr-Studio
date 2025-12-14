@@ -64,37 +64,37 @@
         </section>
 
         <!-- Section 2: Sticky Savoir-Faire (Updated Layout) -->
+        <!-- Section 2: Sticky Savoir-Faire (Updated Layout) -->
         <section id="savoir" class="section sticky-section" data-theme="dark">
-            <canvas id="savoir-canvas" class="savoir-canvas"></canvas>
-            <div class="sticky-wrapper">
-                <div class="sticky-title">
-                    <h2 class="section-title reveal-on-scroll">Savoir-<br>Faire</h2>
-                </div>
+            <div class="savoir-scroll-container" id="savoirScrollContainer">
+                <div class="sticky-wrapper">
+                    <canvas id="savoir-canvas" class="savoir-canvas"></canvas>
+                    <div class="content-layer">
+                        <h2 class="savoir-section-title">Savoir-<br>Faire</h2>
 
-                <div class="sticky-content">
-                    <div class="scroll-text-block scrub-blur">
-                        <span class="block-number">01.</span>
-                        <h3>Philosophy</h3>
-                        <p>We believe in the power of absence. By removing the unnecessary, we highlight the essential
-                            truth of the brand.</p>
-                    </div>
-                    <div class="scroll-text-block scrub-blur">
-                        <span class="block-number">02.</span>
-                        <h3>Method</h3>
-                        <p>Every pixel is placed with intention. Our process is a rigorous journey of reduction until
-                            only the pure form remains.</p>
-                    </div>
-                    <div class="scroll-text-block scrub-blur">
-                        <span class="block-number">03.</span>
-                        <h3>Vision</h3>
-                        <p>To create digital spaces that feel like physical sanctuaries. Quiet, profound, and enduring.
-                        </p>
-                    </div>
-                    <div class="scroll-text-block scrub-blur">
-                        <span class="block-number">04.</span>
-                        <h3>Execution</h3>
-                        <p>Bridging the gap between art and utility. We engineer experiences that are as seamless as
-                            they are beautiful.</p>
+                        <div class="savoir-item" id="item1">
+                            <h3>01. Philosophy</h3>
+                            <p>We believe in the power of absence. By removing the unnecessary, we highlight the
+                                essential truth of the brand.</p>
+                        </div>
+
+                        <div class="savoir-item" id="item2">
+                            <h3>02. Method</h3>
+                            <p>Every pixel is placed with intention. Our process is a rigorous journey of reduction
+                                until only the pure form remains.</p>
+                        </div>
+
+                        <div class="savoir-item" id="item3">
+                            <h3>03. Vision</h3>
+                            <p>To create digital spaces that feel like physical sanctuaries. Quiet, profound, and
+                                enduring.</p>
+                        </div>
+
+                        <div class="savoir-item" id="item4">
+                            <h3>04. Execution</h3>
+                            <p>Bridging the gap between art and utility. We engineer experiences that are as seamless as
+                                they are beautiful.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -199,13 +199,15 @@
     <script src="script.js"></script>
     <script>
         // Savoir-Faire Canvas Animation
+        // Savoir-Faire Canvas & Scroll Logic
         (function () {
+            let isSectionLocked = false;
             let parameters = {
-                size: 30,
-                radius: 1,
+                size: 40,
+                radius: 1.5,
                 proximity: 125,
-                growth: 60,
-                ease: 0.075
+                growth: 40,
+                ease: 0.08
             };
 
             class Point {
@@ -233,44 +235,23 @@
                     this.growthValue = value;
                 }
 
-                get x() {
-                    return this.position.x;
-                }
-
-                set x(value) {
-                    this.position.x = value;
-                }
-
-                get y() {
-                    return this.position.y;
-                }
-
-                set y(value) {
-                    this.position.y = value;
-                }
+                get x() { return this.position.x; }
+                get y() { return this.position.y; }
             }
 
-            function initSavoirCanvas() {
+            function initSavoirInternal() {
                 const canvas = document.getElementById("savoir-canvas");
+                // Check if canvas exists (might be on another page or not loaded)
                 if (!canvas) return;
 
-                const section = document.getElementById("savoir");
-                let circles = [];
                 const context = canvas.getContext("2d");
-
-                window.addEventListener("resize", resizeHandler);
-                window.addEventListener("mousemove", mouseMoveHandler);
-                window.addEventListener("touchmove", touchMoveHandler);
-
-                resizeHandler();
-                build();
-                animate();
+                let circles = [];
 
                 function build() {
                     circles = [];
                     const { size, radius } = parameters;
-                    const columns = Math.ceil(canvas.width / size) + 1;
-                    const rows = Math.ceil(canvas.height / size) + 1;
+                    const columns = Math.ceil(window.innerWidth / size) + 1;
+                    const rows = Math.ceil(window.innerHeight / size) + 1;
                     const amount = Math.ceil(columns * rows);
                     for (let i = 0; i < amount; i++) {
                         const column = i % columns;
@@ -280,27 +261,14 @@
                 }
 
                 function mouseMoveHandler(event) {
-                    const rect = section.getBoundingClientRect();
-                    // Only respond to mouse if it's over the savoir section
-                    if (event.clientY >= rect.top && event.clientY <= rect.bottom) {
-                        const relativeX = event.clientX;
-                        const relativeY = event.clientY - rect.top;
-                        proximityHandler({ clientX: relativeX, clientY: relativeY });
-                    }
-                }
+                    if (!isSectionLocked) return;
 
-                function touchMoveHandler(event) {
-                    const rect = section.getBoundingClientRect();
-                    const touch = event.touches[0];
-                    if (touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
-                        const relativeX = touch.clientX;
-                        const relativeY = touch.clientY - rect.top;
-                        proximityHandler({ clientX: relativeX, clientY: relativeY });
-                    }
-                }
-
-                function proximityHandler(event) {
                     const { proximity, growth } = parameters;
+                    // Adjust mouse coordinates if canvas is fixed/sticky but we scroll?
+                    // "clientX/Y" are viewport relative. 
+                    // Our canvas is fixed/sticky in viewport (top:0, left:0) when locked.
+                    // So clientX/Y map directly to canvas XY.
+
                     for (let c of circles) {
                         let distance = Math.sqrt(Math.pow(c.x - event.clientX, 2) + Math.pow(c.y - event.clientY, 2));
                         let d = map(distance, c._radius, c._radius + proximity, growth, 0);
@@ -310,11 +278,18 @@
                 }
 
                 function animate() {
-                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    // Match the background color in CSS, assuming #111
+                    context.fillStyle = "#111111";
+                    context.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
                     context.save();
                     context.beginPath();
-                    context.fillStyle = "#ADADAD";
-                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.fillStyle = "#ADADAD"; // Effect Color
+
+                    if (!isSectionLocked) {
+                        for (let c of circles) c.addRadius(0);
+                    }
+
                     for (let circle of circles) {
                         circle.draw(context, parameters.ease);
                     }
@@ -324,30 +299,82 @@
                 }
 
                 function resizeHandler() {
-                    const rect = section.getBoundingClientRect();
                     canvas.width = window.innerWidth;
-                    canvas.height = rect.height;
+                    canvas.height = window.innerHeight;
                     build();
                 }
 
-                function normalize(value, min, max) {
-                    return (value - min) / (max - min);
+                window.addEventListener("resize", resizeHandler);
+                window.addEventListener("mousemove", mouseMoveHandler);
+
+                resizeHandler();
+                animate();
+
+                // --- SCROLL LOGIC ---
+                const container = document.getElementById('savoirScrollContainer');
+                if (!container) return;
+
+                const items = [
+                    document.getElementById('item1'),
+                    document.getElementById('item2'),
+                    document.getElementById('item3'),
+                    document.getElementById('item4')
+                ];
+
+                function handleScroll() {
+                    const rect = container.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight;
+
+                    const totalScrollDistance = rect.height - viewportHeight;
+                    const scrolledDistance = -rect.top;
+
+                    let progress = scrolledDistance / totalScrollDistance;
+
+                    if (progress < 0) progress = 0;
+                    if (progress > 1) progress = 1;
+
+                    // Lock Logic:
+                    // Only active when the container's top is <= 0 AND bottom >= viewportHeight
+                    if (rect.top <= 0 && rect.bottom >= viewportHeight) {
+                        isSectionLocked = true;
+                    } else {
+                        isSectionLocked = false;
+                    }
+
+                    let activeIndex = -1;
+                    if (progress < 0.25) activeIndex = 0;
+                    else if (progress < 0.50) activeIndex = 1;
+                    else if (progress < 0.75) activeIndex = 2;
+                    else activeIndex = 3;
+
+                    items.forEach((item, index) => {
+                        if (!item) return;
+                        item.classList.remove('active', 'prev', 'next');
+
+                        if (index === activeIndex) {
+                            item.classList.add('active');
+                        } else if (index === activeIndex - 1) {
+                            item.classList.add('prev');
+                        } else if (index === activeIndex + 1) {
+                            item.classList.add('next');
+                        }
+                    });
                 }
 
-                function interpolate(value, min, max) {
-                    return min + (max - min) * value;
-                }
-
-                function map(value, min1, max1, min2, max2) {
-                    return interpolate(normalize(value, min1, max1), min2, max2);
-                }
+                window.addEventListener('scroll', handleScroll);
+                handleScroll(); // Init
             }
 
-            // Initialize when DOM is ready
+            // Helpers
+            function normalize(value, min, max) { return (value - min) / (max - min); }
+            function interpolate(value, min, max) { return min + (max - min) * value; }
+            function map(value, min1, max1, min2, max2) { return interpolate(normalize(value, min1, max1), min2, max2); }
+
+            // Init
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initSavoirCanvas);
+                document.addEventListener('DOMContentLoaded', initSavoirInternal);
             } else {
-                initSavoirCanvas();
+                initSavoirInternal();
             }
         })();
     </script>

@@ -430,76 +430,125 @@ body.loaded .hero-curtain-right {
     transform: translateY(100%);
 }
 
-/* Sticky Savoir-Faire */
+/* Sticky Savoir-Faire (Updated) */
 .sticky-section {
-    background-color: #111;
-    color: #fff;
     position: relative;
-    overflow: hidden;
+    /* padding is handled by .savoir-scroll-container or container logic */
+    padding: 0;
+    /* Overwrite .section padding if needed for this specific section, or keep it but manage inner heights */
 }
 
-/* Canvas background for savoir-faire section */
+/* 
+   The Scroll Container: Controls total travel distance.
+   400vh = 4 screens worth of scroll.
+*/
+.savoir-scroll-container {
+    height: 400vh;
+    position: relative;
+    width: 100%;
+}
+
+.sticky-wrapper {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #111;
+    /* Ensure background is applied here */
+}
+
+/* Canvas background */
 .savoir-canvas {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;
-    pointer-events: none;
-}
-
-.sticky-wrapper {
-    display: flex;
-    gap: 40px;
-    position: relative;
     z-index: 1;
+    pointer-events: none;
+    /* JS handles mouse events on window or specific handlers */
 }
 
-.sticky-title {
-    flex: 0 0 40%;
-    position: sticky;
-    top: 150px;
-    height: 100px;
+.content-layer {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    color: #fff;
+    pointer-events: none;
+    /* Pass clicks through mostly, enable for items */
 }
 
-.section-title {
+.savoir-section-title {
     font-size: 4rem;
     font-weight: 300;
     text-transform: uppercase;
     line-height: 1;
+    position: absolute;
+    top: 15%;
+    left: 5%;
 }
 
-.sticky-content {
-    flex: 1;
-    padding-bottom: 250px;
-}
-
-.scroll-text-block {
-    margin-bottom: 300px;
-    opacity: 0.1;
+/* Item Styling */
+.savoir-item {
+    font-size: 2rem;
+    line-height: 1.4;
+    opacity: 0;
     filter: blur(10px);
-    transition: opacity 0.3s, filter 0.3s;
+    transform: translate(-50%, 50px) scale(0.95);
+    /* Default: Below and blurred */
+    transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: 10%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    text-align: center;
+    pointer-events: none;
 }
 
-.block-number {
-    font-size: 1rem;
-    color: #666;
-    display: block;
-    margin-bottom: 10px;
-}
-
-.scroll-text-block h3 {
+.savoir-item h3 {
     font-size: 2.5rem;
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
     color: #fff;
 }
 
-.scroll-text-block p {
-    font-size: 1.2rem;
-    color: #999;
-    max-width: 500px;
-    line-height: 1.5;
+.savoir-item p {
+    color: #ccc;
+    font-weight: 300;
+}
+
+.savoir-item.active {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, -50%) scale(1);
+    /* Center, clear */
+    pointer-events: auto;
+}
+
+.savoir-item.prev {
+    opacity: 0.1;
+    filter: blur(10px);
+    transform: translate(-50%, -150px) scale(0.95);
+    /* Above */
+}
+
+.savoir-item.next {
+    opacity: 0.1;
+    filter: blur(10px);
+    transform: translate(-50%, 50px) scale(0.95);
+    /* Below */
 }
 
 /* Heritage */
