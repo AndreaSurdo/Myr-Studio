@@ -96,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('myr_cart_items', JSON.stringify(cartItems));
         localStorage.setItem('myr_cart_count', cartItems.length);
         updateCartCount();
-        alert('Added to cart: ' + title);
     }
 
     // Legacy function (backwards compat)
@@ -106,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
         count++;
         localStorage.setItem('myr_cart_count', count);
         updateCartCount();
-        alert('Item added to cart!');
     }
 
     updateCartCount();
