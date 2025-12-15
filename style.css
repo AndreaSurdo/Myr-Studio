@@ -607,12 +607,13 @@ body.loaded .hero-curtain-right {
 
 .glossy-product-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
     margin-top: 60px;
 }
 
 /* Card with Image Background */
+/* Card with Image Background - Added Border per reference */
 .glossy-card {
     position: relative;
     border-radius: 24px;
@@ -621,11 +622,14 @@ body.loaded .hero-curtain-right {
     transition: transform 0.4s ease, box-shadow 0.4s ease;
     aspect-ratio: 3/4;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    /* Added white border */
 }
 
 .glossy-card:hover {
     transform: translateY(-8px) scale(1.02);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 255, 255, 0.9);
 }
 
 /* Background Image */
@@ -649,110 +653,132 @@ body.loaded .hero-curtain-right {
     transform: scale(1.08);
 }
 
-/* Glassmorphism Overlay */
+/* Glassmorphism Overlay - Stronger white at top fading down with mask */
 .glossy-overlay {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
+    height: 65%;
+    /* Restrict height so it doesn't cover bottom */
     z-index: 2;
     padding: 25px 22px;
-    /* Gradient: soft fade from semi-opaque to fully transparent */
+    /* Gradient: White top to transparent */
     background: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.75) 0%,
-            rgba(255, 255, 255, 0.5) 15%,
-            rgba(255, 255, 255, 0.25) 25%,
-            rgba(255, 255, 255, 0.1) 35%,
-            rgba(255, 255, 255, 0) 45%);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(255, 255, 255, 0.7) 40%,
+            rgba(255, 255, 255, 0) 100%);
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    /* Gradient Mask: Fades the blur/white out smoothly */
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+
     border-radius: 24px 24px 0 0;
+    pointer-events: none;
 }
 
 /* Product Info in Overlay - BLACK TEXT */
 .glossy-card-name {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 500;
     margin-bottom: 4px;
     color: #000;
+    line-height: 1.2;
 }
 
 .glossy-card-desc {
-    font-size: 0.85rem;
-    color: #333;
-    margin-bottom: 15px;
-    font-weight: 300;
+    font-size: 0.95rem;
+    color: #222;
+    margin-bottom: 20px;
+    font-weight: 400;
 }
 
 .glossy-card-price {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     font-weight: 700;
     color: #000;
     display: block;
     margin-bottom: 5px;
 }
 
+.glossy-card-old-price {
+    font-size: 1rem;
+    color: #666;
+    text-decoration: line-through;
+    font-style: italic;
+}
+
 /* Bottom Section for Button */
 .glossy-card-bottom {
     position: absolute;
-    bottom: 0;
+    bottom: 30px;
     left: 0;
     right: 0;
     z-index: 3;
-    padding: 25px;
+    padding: 0 25px;
     display: flex;
     justify-content: center;
 }
 
-/* Glossy Pill Button with blur effect */
+/* Glossy Pill Button - Milky Glass Look */
 .glossy-add-btn {
-    padding: 14px 28px;
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    padding: 16px 40px;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #fff;
     border-radius: 50px;
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600;
     color: #000;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .glossy-add-btn:hover {
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow:
-        0 8px 25px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.85);
     transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-/* Badge for discounts or labels */
+/* Badge - Glassy Square (Reduced size per request) */
 .glossy-badge {
     position: absolute;
-    top: auto;
-    bottom: 80px;
+    top: 50%;
     right: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    padding: 12px 18px;
+    transform: translateY(-50%);
+    width: 65px;
+    /* Reduced from 75px */
+    height: 65px;
+    /* Reduced from 75px */
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(8px);
     border-radius: 16px;
-    font-size: 0.9rem;
+    /* Slightly adjusted radius */
+    font-size: 0.8rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: #000;
     z-index: 4;
-    border: 1px solid rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    line-height: 1.2;
+
+    /* Center content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    line-height: 1.1;
 }
 
 .glossy-badge span {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    margin-bottom: 2px;
 }
 
 @media (max-width: 900px) {
