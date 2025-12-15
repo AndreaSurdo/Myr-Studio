@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Section - Glossy Cards Test | Myr-Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Test page specific styles */
+        .test-work-section {
+            background: linear-gradient(135deg, #e8e4df 0%, #d4cfc7 50%, #c9c4bc 100%);
+            min-height: 100vh;
+            padding: 120px 40px 80px 40px;
+            color: #000;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 4rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            margin-bottom: 15px;
+        }
+
+        .section-desc {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Glossy Product Grid */
+        .glossy-product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Card with Image Background - Added Border per reference */
+        .glossy-card {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            aspect-ratio: 3/4;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            /* Added white border */
+        }
+
+        .glossy-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Background Image */
+        .glossy-card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .glossy-card-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .glossy-card:hover .glossy-card-bg img {
+            transform: scale(1.08);
+        }
+
+        /* Glassmorphism Overlay - Stronger white at top fading down */
+        .glossy-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 65%;
+            /* Restrict height so it doesn't cover bottom */
+            z-index: 2;
+            padding: 25px 22px;
+            /* Gradient: White top to transparent */
+            background: linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.9) 0%,
+                    rgba(255, 255, 255, 0.7) 40%,
+                    rgba(255, 255, 255, 0) 100%);
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            /* Gradient Mask: Fades the blur/white out smoothly */
+            -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+            mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+
+            border-radius: 24px 24px 0 0;
+            pointer-events: none;
+        }
+
+        /* Product Info in Overlay - BLACK TEXT */
+        .glossy-card-name {
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: #000;
+            line-height: 1.2;
+        }
+
+        .glossy-card-desc {
+            font-size: 0.95rem;
+            color: #222;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .glossy-card-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #000;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .glossy-card-old-price {
+            font-size: 1rem;
+            color: #666;
+            text-decoration: line-through;
+            font-style: italic;
+        }
+
+        /* Bottom Section for Button */
+        .glossy-card-bottom {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            padding: 0 25px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Glossy Pill Button - Milky Glass Look */
+        /* Glossy Pill Button - Milky Glass Look */
+        .glossy-add-btn {
+            padding: 16px 40px;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #fff;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .glossy-add-btn:hover {
+            background: rgba(255, 255, 255, 0.85);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Badge - Glassy Square */
+        .glossy-badge {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 75px;
+            /* Fixed square size */
+            height: 75px;
+            /* Fixed square size */
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 18px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #000;
+            z-index: 4;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+            /* Center content */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            line-height: 1.1;
+        }
+
+        .glossy-badge span {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 2px;
+        }
+
+        @media (max-width: 900px) {
+            .glossy-product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .glossy-product-grid {
+                grid-template-columns: 1fr;
+                max-width: 350px;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .test-work-section {
+                padding: 100px 20px 60px 20px;
+            }
+
+            .glossy-card {
+                aspect-ratio: 2/3;
+            }
+        }
+    </style>
+</head>
+
+<body class="is-loading">
+
+    <!-- Header -->
+    <header class="site-header">
+        <a href="index.html" class="logo load-item">Myr-Studio</a>
+
+        <div class="header-right load-item">
+            <div class="menu-container">
+                <div class="menu-trigger" id="menu-trigger">
+                    <span class="line line-1"></span>
+                    <span class="line line-2"></span>
+                </div>
+
+                <nav class="menu-dropdown" id="menu-dropdown">
+                    <div class="menu-close-btn" id="menu-close-btn">
+                        <span class="close-line"></span>
+                        <span class="close-line"></span>
+                    </div>
+                    <ul class="nav-links">
+                        <li><a href="index.html" class="menu-link">Home</a></li>
+                        <li><a href="index.html#work" class="menu-link">Work</a></li>
+                        <li><a href="index.html#savoir" class="menu-link">Savoir-Faire</a></li>
+                        <li><a href="index.html#heritage" class="menu-link">Heritage</a></li>
+                        <li><a href="sustainability.html" class="menu-link">Sustainability</a></li>
+                        <li><a href="contact.html" class="menu-link">Contact</a></li>
+                        <li><a href="cart.html" class="menu-link">Cart (<span id="cart-count">0</span>)</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Test Work Section with Glossy Cards -->
+    <section class="test-work-section" data-theme="light">
+        <div class="section-header">
+            <h2 class="section-title reveal-on-scroll">Selected Work</h2>
+            <p class="section-desc reveal-on-scroll delay-1">Curated pieces. Timeless elegance.</p>
+        </div>
+
+        <div class="glossy-product-grid">
+            <!-- Product 1 -->
+            <div class="glossy-card reveal-on-scroll delay-2" onclick="window.location.href='product.html?id=1'">
+                <div class="glossy-card-bg">
+                    <img src="assets/bag-1.png" alt="Tan Crossbody">
+                </div>
+                <div class="glossy-overlay">
+                    <h3 class="glossy-card-name">Tan Crossbody</h3>
+                    <p class="glossy-card-desc">Premium vegetable-tanned leather</p>
+                    <span class="glossy-card-price">€ 850</span>
+                </div>
+                <div class="glossy-card-bottom">
+                    <button class="glossy-add-btn"
+                        onclick="event.stopPropagation(); addToCartItem('1', 'Tan Crossbody', '€ 850.00', 'assets/bag-1.png')">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="glossy-card reveal-on-scroll delay-3" onclick="window.location.href='product.html?id=2'">
+                <div class="glossy-card-bg">
+                    <img src="assets/bag-2.png" alt="White Clutch">
+                </div>
+                <div class="glossy-overlay">
+                    <h3 class="glossy-card-name">White Clutch</h3>
+                    <p class="glossy-card-desc">Minimalist evening elegance</p>
+                    <span class="glossy-card-price">€ 620</span>
+                </div>
+                <div class="glossy-card-bottom">
+                    <button class="glossy-add-btn"
+                        onclick="event.stopPropagation(); addToCartItem('2', 'White Clutch', '€ 620.00', 'assets/bag-2.png')">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 3 - With Badge -->
+            <div class="glossy-card reveal-on-scroll delay-2" onclick="window.location.href='product.html?id=3'">
+                <div class="glossy-card-bg">
+                    <img src="assets/bag-3.png" alt="Noir Collection" onerror="this.style.backgroundColor='#333'">
+                </div>
+                <div class="glossy-overlay">
+                    <h3 class="glossy-card-name">Noir Collection</h3>
+                    <p class="glossy-card-desc">Maximum impact, zero noise</p>
+                    <span class="glossy-card-price">€ 1,200</span>
+                </div>
+                <span class="glossy-badge"><span>20%</span>OFF</span>
+                <div class="glossy-card-bottom">
+                    <button class="glossy-add-btn"
+                        onclick="event.stopPropagation(); addToCartItem('3', 'Noir Collection', '€ 1,200.00', 'assets/bag-3.png')">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="glossy-card reveal-on-scroll delay-3" onclick="window.location.href='product.html?id=4'">
+                <div class="glossy-card-bg">
+                    <img src="assets/bag-4.png" alt="Urban Utility" onerror="this.style.backgroundColor='#444'">
+                </div>
+                <div class="glossy-overlay">
+                    <h3 class="glossy-card-name">Urban Utility</h3>
+                    <p class="glossy-card-desc">Engineered for the metropolis</p>
+                    <span class="glossy-card-price">€ 550</span>
+                </div>
+                <div class="glossy-card-bottom">
+                    <button class="glossy-add-btn"
+                        onclick="event.stopPropagation(); addToCartItem('4', 'Urban Utility', '€ 550.00', 'assets/bag-4.png')">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="minimal-footer" style="padding: 40px; text-align: center; background: #111; color: #666;">
+        <p>&copy; 2024 Myr-Studio. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
