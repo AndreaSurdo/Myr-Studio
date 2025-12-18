@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Viewer | Myr-Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            overflow: hidden;
+            background-color: #f5f5f5;
+            /* Light gray base */
+        }
+
+        #ui-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            pointer-events: none;
+            /* Let clicks pass through when hidden? No, we need clicks on button */
+        }
+
+        #ui-container.hidden {
+            pointer-events: none;
+        }
+
+        #ui-container.hidden .intro-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-content {
+            text-align: center;
+            pointer-events: auto;
+            transition: opacity 0.5s ease;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #111;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        #viewer-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .loading-bar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            display: none;
+            z-index: 20;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #111;
+            border-radius: 2px;
+            transition: width 0.2s;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 20;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .close-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="ui-container">
+        <div class="intro-content">
+            <h1>Myr-Studio<br><span style="font-size: 1.2rem; display:block; margin-top: 10px; color: #666;">Digital
+                    Showroom</span></h1>
+
+            <button class="blob-btn" id="view-btn">
+                View 3D Model
+                <span class="blob-btn__inner">
+                    <span class="blob-btn__blobs">
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                        <span class="blob-btn__blob"></span>
+                    </span>
+                </span>
+            </button>
+        </div>
+    </div>
+
+    <button id="close-btn" class="close-btn">Close Viewer</button>
+
+    <div id="loader" class="loading-bar">
+        <div id="progress" class="progress"></div>
+    </div>
+
+    <div id="viewer-container"></div>
+
+    <!-- SVG Filter for Gooey Effect (Reused) -->
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: none;">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10"></feGaussianBlur>
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 21 -7" result="goo">
+                </feColorMatrix>
+                <feBlend in2="goo" in="SourceGraphic" result="mix"></feBlend>
+            </filter>
+        </defs>
+    </svg>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        let scene, camera, renderer, controls, bagModel, animationId;
+        const container = document.getElementById('viewer-container');
+        const viewBtn = document.getElementById('view-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const uiContainer = document.getElementById('ui-container');
+        const loadingBar = document.getElementById('loader');
+        const progressBar = document.getElementById('progress');
+
+        // Blob Button Logic (Copied for standalone test page)
+        viewBtn.addEventListener('click', (e) => {
+            viewBtn.classList.add('active');
+            setTimeout(() => {
+                viewBtn.classList.remove('active');
+                init3D(); // Start 3D after button animation starts
+            }, 600); // Slight delay for effect
+        });
+
+        closeBtn.addEventListener('click', () => {
+            closeViewer();
+        });
+
+        function init3D() {
+            // UI Transition
+            uiContainer.classList.add('hidden');
+
+            // ALWAYS ensure container is visible
+            container.style.display = 'block';
+
+            if (scene) {
+                // Already initialized, just resume/show
+                if (renderer && renderer.domElement) {
+                    renderer.domElement.style.display = 'block';
+                }
+                closeBtn.classList.add('visible');
+                animate();
+                return;
+            }
+
+            console.log('Initializing 3D Scene...');
+
+            // 1. Scene & Atmosphere
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xffffff);
+            scene.fog = new THREE.Fog(0xffffff, 10, 50);
+
+            // 2. Camera
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 2, 8);
+
+            // 3. Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.25;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            // 4. Lighting (Clean High-End Studio)
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            scene.add(ambientLight);
+
+            const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
+            keyLight.position.set(5, 10, 7.5);
+            keyLight.castShadow = true;
+            keyLight.shadow.mapSize.width = 2048;
+            keyLight.shadow.mapSize.height = 2048;
+            keyLight.shadow.camera.near = 0.5;
+            keyLight.shadow.camera.far = 100;
+            keyLight.shadow.camera.left = -10;
+            keyLight.shadow.camera.right = 10;
+            keyLight.shadow.camera.top = 10;
+            keyLight.shadow.camera.bottom = -10;
+            keyLight.shadow.bias = -0.0005;
+            scene.add(keyLight);
+
+            const fillLight = new THREE.DirectionalLight(0xffffff, 0.6);
+            fillLight.position.set(-5, 5, 5);
+            scene.add(fillLight);
+
+            const backLight = new THREE.PointLight(0xffffff, 1);
+            backLight.position.set(0, 5, -10);
+            scene.add(backLight);
+
+            // 5. Controls
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.minDistance = 1;
+            controls.maxDistance = 100;
+            controls.target.set(0, 1, 0);
+            controls.enableZoom = true; // Use standard zoom but shifted by cursor logic
+
+            // Zoom-to-cursor logic: Shift target toward mouse position when zooming
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+
+            renderer.domElement.addEventListener('mousemove', (event) => {
+                const rect = renderer.domElement.getBoundingClientRect();
+                mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            });
+
+            renderer.domElement.addEventListener('wheel', (event) => {
+                if (event.deltaY < 0 && bagModel) { // Zooming in
+                    raycaster.setFromCamera(mouse, camera);
+                    const intersects = raycaster.intersectObject(bagModel, true);
+                    if (intersects.length > 0) {
+                        const point = intersects[0].point;
+                        controls.target.lerp(point, 0.05); // Gently shift toward detail
+                    }
+                }
+            }, { passive: true });
+
+            // 6. Infinite White Floor
+            const floorMat = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                roughness: 1,
+                metalness: 0
+            });
+            const floor = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), floorMat);
+            floor.rotation.x = -Math.PI / 2;
+            floor.position.y = 0;
+            floor.receiveShadow = true;
+            scene.add(floor);
+
+            // Procedural Environment for high-end reflections without walls
+            const pmremGenerator = new THREE.PMREMGenerator(renderer);
+            pmremGenerator.compileEquirectangularShader();
+
+            // Create a virtual "sky" for reflections so leather looks premium
+            const envScene = new THREE.Scene();
+            envScene.add(new THREE.HemisphereLight(0xffffff, 0x000000, 1));
+            const envLight = new THREE.PointLight(0xffffff, 50);
+            envLight.position.set(5, 10, 5);
+            envScene.add(envLight);
+
+            scene.environment = pmremGenerator.fromScene(envScene).texture;
+
+            loadBag();
+            window.addEventListener('resize', onWindowResize);
+            animate();
+
+            closeBtn.classList.add('visible');
+        }
+
+        function loadBag() {
+            const loader = new GLTFLoader();
+            loadingBar.style.display = 'block';
+
+            console.log('Loading bag_leather.glb...');
+
+            loader.load('bag_leather.glb',
+                (gltf) => {
+                    console.log('Model loaded successfully:', gltf);
+                    bagModel = gltf.scene;
+
+                    // Centering and scaling logic
+                    const box = new THREE.Box3().setFromObject(bagModel);
+                    const size = box.getSize(new THREE.Vector3());
+                    const center = box.getCenter(new THREE.Vector3());
+
+                    console.log('Model size:', size);
+                    console.log('Model center:', center);
+
+                    // Calculate the max dimension and scale to fit nicely
+                    const maxDim = Math.max(size.x, size.y, size.z);
+                    const targetSize = 2; // We want the model to be about 2 units tall/wide
+                    const scale = targetSize / maxDim;
+
+                    bagModel.scale.setScalar(scale);
+                    console.log('Applied scale:', scale);
+
+                    // Recalculate bounding box after scaling
+                    box.setFromObject(bagModel);
+                    box.getCenter(center);
+                    box.getSize(size);
+
+                    // Center the model
+                    bagModel.position.x = -center.x;
+                    bagModel.position.z = -center.z;
+                    bagModel.position.y = -box.min.y; // Sit on floor
+
+                    // Auto-fit camera distance
+                    const fov = camera.fov * (Math.PI / 180);
+                    const cameraZ = (Math.max(size.x, size.y) / 2) / Math.tan(fov / 2) * 1.5;
+                    camera.position.set(0, size.y / 2, cameraZ);
+                    controls.target.set(0, size.y / 2, 0);
+                    controls.update();
+
+                    console.log('Camera positioned at Z:', cameraZ);
+
+                    bagModel.traverse((node) => {
+                        if (node.isMesh) {
+                            node.castShadow = true;
+                            node.receiveShadow = true;
+                            if (node.material) {
+                                node.material.envMapIntensity = 1.0;
+                            }
+                        }
+                    });
+
+                    scene.add(bagModel);
+                    console.log('Model added to scene');
+                    loadingBar.style.display = 'none';
+
+                    // Skip intro animation for now, just position correctly
+                    // bagModel.position.y = 0.5;
+                    const targetY = 0;
+
+                    let startTime = null;
+                    function dropAnimation(time) {
+                        if (!startTime) startTime = time;
+                        const progress = Math.min((time - startTime) / 1000, 1);
+                        const ease = 1 - Math.pow(1 - progress, 3);
+
+                        if (bagModel) {
+                            bagModel.position.y = 0.5 - (0.5 * ease);
+                            bagModel.rotation.y = ease * Math.PI * 2;
+                        }
+
+                        if (progress < 1) {
+                            requestAnimationFrame(dropAnimation);
+                        }
+                    }
+                    requestAnimationFrame(dropAnimation);
+                },
+                (xhr) => {
+                    if (xhr.total > 0) {
+                        const percent = (xhr.loaded / xhr.total) * 100;
+                        progressBar.style.width = percent + '%';
+                        console.log(`Loading: ${percent.toFixed(1)}%`);
+                    }
+                },
+                (error) => {
+                    console.error('Error loading 3D model:', error);
+                    loadingBar.style.display = 'none';
+                    alert('Could not load bag_leather.glb. Make sure you are running from a local server (not file://).');
+                }
+            );
+        }
+
+        function closeViewer() {
+            uiContainer.classList.remove('hidden');
+            closeBtn.classList.remove('visible');
+            // Check if renderer exists before trying to access domElement 
+            if (renderer && renderer.domElement) {
+                renderer.domElement.style.display = 'none'; // Hide canvas if we want to keep state
+                // OR dispose? For a showroom, keeping state might be better to avoid reloading.
+                // Let's just hide to keep it snappy.
+                container.style.display = 'none';
+            }
+        }
+
+        function onWindowResize() {
+            if (!camera || !renderer) return;
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        function animate() {
+            animationId = requestAnimationFrame(animate);
+            if (controls) controls.update();
+            if (renderer && scene && camera) renderer.render(scene, camera);
+        }
+    </script>
+</body>
+
+</html>
