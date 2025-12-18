@@ -1139,22 +1139,7 @@ body.loaded .hero-curtain-right {
     gap: 10px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .page-title {
-        font-size: 15vw;
-    }
-
-    .contact-info {
-        flex-direction: column;
-        gap: 50px;
-    }
-
-    .text-grid {
-        grid-template-columns: 1fr;
-        gap: 50px;
-    }
-}
+/* Responsive adjustments continued below */
 
 .delay-3 {
     transition-delay: 0.3s;
@@ -1240,9 +1225,406 @@ body.loaded .hero-curtain-right {
 
     .product-title {
         font-size: 2.5rem;
+        opacity: 0;
+        transform: translateY(100px);
+        transition: opacity 1s, transform 1s;
     }
 
-    .heritage-title {
-        font-size: 10vw;
+    .scrub-slide-up.active-scroll {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .delay-1 {
+        transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+        transition-delay: 0.2s;
+    }
+
+    /* --- General Static Page Styles (Contact/Sustainability) --- */
+    .page-content {
+        min-height: 100vh;
+        padding: 160px 40px 100px 40px;
+        /* Top padding clears header */
+        max-width: 1200px;
+        margin: 0 auto;
+        color: #fff;
+        background-color: #111;
+        /* Fallback/Ensure dark theme */
+    }
+
+    .dark-theme {
+        background-color: #111;
+        color: #fff;
+    }
+
+    .page-title {
+        font-size: 6rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        margin-bottom: 80px;
+        line-height: 1;
+    }
+
+    /* Text Layout (Sustainability) */
+    .text-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 80px;
+    }
+
+    .text-section h2 {
+        font-size: 2rem;
+        font-weight: 400;
+        margin-bottom: 20px;
+        color: #adadad;
+        /* Brand accent grey */
+        text-transform: uppercase;
+    }
+
+    .text-section p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #ccc;
+        font-weight: 300;
+    }
+
+    /* Contact Layout */
+    .center-layout {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 80vh;
+        /* Center vertically */
+    }
+
+    .contact-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 80px;
+    }
+
+    .info-block h3 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #666;
+        margin-bottom: 15px;
+    }
+
+    .info-block .contact-link {
+        font-size: 2rem;
+        font-weight: 300;
+        text-decoration: none;
+        display: block;
+        margin: 0 0 10px 0;
+        color: #fff;
+        transition: color 0.3s;
+    }
+
+    .info-block .contact-link:hover {
+        color: #adadad;
+    }
+
+    .social-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Responsive adjustments continued below */
+
+    .delay-3 {
+        transition-delay: 0.3s;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .site-header {
+            padding: 20px;
+        }
+
+        .header-right {
+            gap: 15px;
+        }
+
+        .cart-link {
+            font-size: 0.9rem;
+        }
+
+        .menu-dropdown {
+            width: calc(100vw - 60px);
+            /* Full width minus trigger width */
+            height: auto;
+            min-height: auto;
+            left: auto;
+            right: 0;
+            top: 0;
+        }
+
+        .nav-links {
+            text-align: center;
+            padding: 20px;
+            margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 5px;
+        }
+
+        .menu-link {
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .project-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-title {
+            font-size: 12vw;
+        }
+
+        .sticky-wrapper {
+            flex-direction: column;
+        }
+
+        .sticky-title {
+            position: sticky;
+            top: 80px;
+            margin-bottom: 50px;
+            background: #111;
+            z-index: 10;
+            padding-bottom: 20px;
+        }
+
+        .scroll-text-block {
+            margin-bottom: 150px;
+        }
+
+        /* Product */
+        .product-page {
+            padding-top: 100px;
+        }
+
+        .product-image-col {
+            padding: 0 20px 20px 20px;
+        }
+
+        .product-details-col {
+            padding: 0 20px 40px 20px;
+        }
+
+        .product-title {
+            font-size: 2.5rem;
+        }
+
+        transition: opacity 1s,
+        transform 1s;
+    }
+
+    .scrub-slide-up.active-scroll {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .delay-1 {
+        transition-delay: 0.1s;
+    }
+
+    .delay-2 {
+        transition-delay: 0.2s;
+    }
+
+    /* --- General Static Page Styles (Contact/Sustainability) --- */
+    .page-content {
+        min-height: 100vh;
+        padding: 160px 40px 100px 40px;
+        /* Top padding clears header */
+        max-width: 1200px;
+        margin: 0 auto;
+        color: #fff;
+        background-color: #111;
+        /* Fallback/Ensure dark theme */
+    }
+
+    .dark-theme {
+        background-color: #111;
+        color: #fff;
+    }
+
+    .page-title {
+        font-size: 6rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        margin-bottom: 80px;
+        line-height: 1;
+    }
+
+    /* Text Layout (Sustainability) */
+    .text-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 80px;
+    }
+
+    .text-section h2 {
+        font-size: 2rem;
+        font-weight: 400;
+        margin-bottom: 20px;
+        color: #adadad;
+        /* Brand accent grey */
+        text-transform: uppercase;
+    }
+
+    .text-section p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #ccc;
+        font-weight: 300;
+    }
+
+    /* Contact Layout */
+    .center-layout {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 80vh;
+        /* Center vertically */
+    }
+
+    .contact-info {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 80px;
+    }
+
+    .info-block h3 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #666;
+        margin-bottom: 15px;
+    }
+
+    .info-block .contact-link {
+        font-size: 2rem;
+        font-weight: 300;
+        text-decoration: none;
+        display: block;
+        margin: 0 0 10px 0;
+        color: #fff;
+        transition: color 0.3s;
+    }
+
+    .info-block .contact-link:hover {
+        color: #adadad;
+    }
+
+    .social-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Responsive adjustments continued below */
+
+    .delay-3 {
+        transition-delay: 0.3s;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .site-header {
+            padding: 20px;
+        }
+
+        .header-right {
+            gap: 15px;
+        }
+
+        .cart-link {
+            font-size: 0.9rem;
+        }
+
+        .menu-dropdown {
+            width: calc(100vw - 60px);
+            /* Full width minus trigger width */
+            height: auto;
+            min-height: auto;
+            left: auto;
+            right: 0;
+            top: 0;
+        }
+
+        .nav-links {
+            text-align: center;
+            padding: 20px;
+            margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 5px;
+        }
+
+        .menu-link {
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .project-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-title {
+            font-size: 12vw;
+        }
+
+        .sticky-wrapper {
+            flex-direction: column;
+        }
+
+        .sticky-title {
+            position: sticky;
+            top: 80px;
+            margin-bottom: 50px;
+            background: #111;
+            z-index: 10;
+            padding-bottom: 20px;
+        }
+
+        .scroll-text-block {
+            margin-bottom: 150px;
+        }
+
+        /* Product */
+        .product-page {
+            padding-top: 100px;
+        }
+
+        .product-image-col {
+            padding: 0 20px 20px 20px;
+        }
+
+        .product-details-col {
+            padding: 0 20px 40px 20px;
+        }
+
+        .product-title {
+            font-size: 2.5rem;
+        }
+
+        .heritage-title {
+            font-size: 10vw;
+        }
+
+        /* Reduce 'The Craft' title on mobile */
+        .savoir-section-title {
+            font-size: 3rem;
+        }
     }
 }

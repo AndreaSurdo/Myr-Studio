@@ -59,8 +59,16 @@
                             <p id="p-desc">Description loading...</p>
                         </div>
 
-                        <button class="add-to-cart-btn" id="add-to-cart-btn">
+                        <button class="blob-btn" id="add-to-cart-btn">
                             Add to Cart
+                            <span class="blob-btn__inner">
+                                <span class="blob-btn__blobs">
+                                    <span class="blob-btn__blob"></span>
+                                    <span class="blob-btn__blob"></span>
+                                    <span class="blob-btn__blob"></span>
+                                    <span class="blob-btn__blob"></span>
+                                </span>
+                            </span>
                         </button>
                     </div>
                 </div>
@@ -125,13 +133,26 @@
             document.getElementById('p-title').innerText = "Product Not Found";
         }
 
+        // Note: The global click listener in script.js handles the animation for .blob-btn
         document.getElementById('add-to-cart-btn').addEventListener('click', () => {
             if (product) {
+                // We don't need to manually trigger animation here as script.js does it
                 addToCartItem(id, product.title, product.price, product.image);
             }
         });
 
     </script>
+    <!-- SVG Filter for Gooey Effect -->
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: none;">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10"></feGaussianBlur>
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 21 -7" result="goo">
+                </feColorMatrix>
+                <feBlend in2="goo" in="SourceGraphic" result="mix"></feBlend>
+            </filter>
+        </defs>
+    </svg>
 </body>
 
 </html>
