@@ -1139,4 +1139,8 @@ body.loaded .hero-curtain-right {
     .product-title {
         font-size: 2.5rem;
     }
+
+    .heritage-title {
+        font-size: 10vw;
+    }
 }
