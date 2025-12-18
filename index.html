@@ -139,9 +139,17 @@
                             <span class="glossy-card-price">€ 850</span>
                         </div>
                         <div class="glossy-card-bottom">
-                            <button class="glossy-add-btn"
+                            <button class="blob-btn"
                                 onclick="event.stopPropagation(); addToCartItem('1', 'Tan Crossbody', '€ 850.00', 'assets/bag-1.png')">
                                 Add to Cart
+                                <span class="blob-btn__inner">
+                                    <span class="blob-btn__blobs">
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                    </span>
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -158,9 +166,17 @@
                             <span class="glossy-card-price">€ 620</span>
                         </div>
                         <div class="glossy-card-bottom">
-                            <button class="glossy-add-btn"
+                            <button class="blob-btn"
                                 onclick="event.stopPropagation(); addToCartItem('2', 'White Clutch', '€ 620.00', 'assets/bag-2.png')">
                                 Add to Cart
+                                <span class="blob-btn__inner">
+                                    <span class="blob-btn__blobs">
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                    </span>
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -179,9 +195,17 @@
                         </div>
                         <span class="glossy-badge"><span>20%</span>OFF</span>
                         <div class="glossy-card-bottom">
-                            <button class="glossy-add-btn"
+                            <button class="blob-btn"
                                 onclick="event.stopPropagation(); addToCartItem('3', 'Noir Collection', '€ 1,200.00', 'assets/bag-3.png')">
                                 Add to Cart
+                                <span class="blob-btn__inner">
+                                    <span class="blob-btn__blobs">
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                    </span>
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -199,9 +223,17 @@
                             <span class="glossy-card-price">€ 550</span>
                         </div>
                         <div class="glossy-card-bottom">
-                            <button class="glossy-add-btn"
+                            <button class="blob-btn"
                                 onclick="event.stopPropagation(); addToCartItem('4', 'Urban Utility', '€ 550.00', 'assets/bag-4.png')">
                                 Add to Cart
+                                <span class="blob-btn__inner">
+                                    <span class="blob-btn__blobs">
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                    </span>
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -422,6 +454,19 @@
             }
         });
     </script>
+
+    <!-- SVG Filter for Gooey Effect -->
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: none;">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10"></feGaussianBlur>
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 21 -7" result="goo">
+                </feColorMatrix>
+                <feBlend in2="goo" in="SourceGraphic" result="mix"></feBlend>
+            </filter>
+        </defs>
+    </svg>
+
 </body>
 
 </html>

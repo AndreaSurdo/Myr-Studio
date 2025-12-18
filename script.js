@@ -98,6 +98,17 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCartCount();
     }
 
+    // Blob Button click animation handler
+    document.querySelectorAll('.blob-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            // Note: inline onclick handles stopPropagation, but this listener will still fire
+            btn.classList.add('active');
+            setTimeout(() => {
+                btn.classList.remove('active');
+            }, 3000);
+        });
+    });
+
     // Legacy function (backwards compat)
     window.addToCart = function (productId) {
         // This is now deprecated, use addToCartItem

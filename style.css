@@ -745,6 +745,108 @@ body.loaded .hero-curtain-right {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Blob Button implementation */
+.blob-btn {
+    z-index: 1;
+    position: relative;
+    padding: 16px 40px;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #fff;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    color: #000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    text-transform: capitalize;
+    /* Requested change */
+    outline: none;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.blob-btn:hover {
+    background: rgba(255, 255, 255, 0.85);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.blob-btn.active {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.blob-btn__inner {
+    z-index: -1;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+    background: transparent;
+}
+
+.blob-btn__blobs {
+    position: relative;
+    display: block;
+    height: 100%;
+    filter: url('#goo');
+}
+
+.blob-btn__blob {
+    position: absolute;
+    top: 0;
+    width: 25%;
+    height: 100%;
+    background: #000;
+    border-radius: 100%;
+    transform: translate3d(0, 150%, 0) scale(1.7);
+    transition: transform 0.45s;
+}
+
+@supports(filter: url('#goo')) {
+    .blob-btn__blob {
+        transform: translate3d(0, 150%, 0) scale(1.4);
+    }
+}
+
+.blob-btn__blob:nth-child(1) {
+    left: 0%;
+    transition-delay: 0s;
+}
+
+.blob-btn__blob:nth-child(2) {
+    left: 30%;
+    transition-delay: 0.08s;
+}
+
+.blob-btn__blob:nth-child(3) {
+    left: 60%;
+    transition-delay: 0.16s;
+}
+
+.blob-btn__blob:nth-child(4) {
+    left: 90%;
+    transition-delay: 0.24s;
+}
+
+.blob-btn.active .blob-btn__blob {
+    transform: translate3d(0, 0, 0) scale(1.7);
+}
+
+@supports(filter: url('#goo')) {
+    .blob-btn.active .blob-btn__blob {
+        transform: translate3d(0, 0, 0) scale(1.4);
+    }
+}
+
 /* Badge - Glassy Square (Reduced size per request) */
 .glossy-badge {
     position: absolute;
