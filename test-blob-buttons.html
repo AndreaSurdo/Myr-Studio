@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blob Button Test | Myr-Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Refined Blob Button - Matching Original Glossy Style */
+        .blob-btn {
+            z-index: 1;
+            position: relative;
+            padding: 16px 40px;
+            /* Match glossy-add-btn */
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #fff;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            text-transform: uppercase;
+            outline: none;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        /* Hover Effect (Button Lift only, no blobs) */
+        .blob-btn:hover {
+            background: rgba(255, 255, 255, 0.85);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            color: #000;
+        }
+
+        /* Active State (Triggered by JS click) - Blobs appear, Text turns white */
+        .blob-btn.active {
+            color: #fff;
+            background: rgba(0, 0, 0, 0.05);
+            /* Slight darken for contrast while blobs fill */
+        }
+
+        .blob-btn__inner {
+            z-index: -1;
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50px;
+            background: transparent;
+        }
+
+        .blob-btn__blobs {
+            position: relative;
+            display: block;
+            height: 100%;
+            filter: url('#goo');
+        }
+
+        .blob-btn__blob {
+            position: absolute;
+            top: 0;
+            width: 25%;
+            height: 100%;
+            background: #000;
+            border-radius: 100%;
+            transform: translate3d(0, 150%, 0) scale(1.7);
+            transition: transform 0.45s;
+        }
+
+        @supports(filter: url('#goo')) {
+            .blob-btn__blob {
+                transform: translate3d(0, 150%, 0) scale(1.4);
+            }
+        }
+
+        .blob-btn__blob:nth-child(1) {
+            left: 0%;
+            transition-delay: 0s;
+        }
+
+        .blob-btn__blob:nth-child(2) {
+            left: 30%;
+            transition-delay: 0.08s;
+        }
+
+        .blob-btn__blob:nth-child(3) {
+            left: 60%;
+            transition-delay: 0.16s;
+        }
+
+        .blob-btn__blob:nth-child(4) {
+            left: 90%;
+            transition-delay: 0.24s;
+        }
+
+        /* ONLY animate blobs on .active class */
+        .blob-btn.active .blob-btn__blob {
+            transform: translate3d(0, 0, 0) scale(1.7);
+        }
+
+        @supports(filter: url('#goo')) {
+            .blob-btn.active .blob-btn__blob {
+                transform: translate3d(0, 0, 0) scale(1.4);
+            }
+        }
+
+        /* Adjust positioning for this test page */
+        .glossy-card-bottom {
+            bottom: 25px;
+        }
+    </style>
+</head>
+
+<body class="loaded">
+    <header class="site-header light-theme-active">
+        <a href="index.html" class="logo">Myr-Studio</a>
+    </header>
+
+    <main>
+        <section id="work" class="section work-section" data-theme="light">
+            <div class="content-wrapper">
+                <div class="section-header">
+                    <h2 class="section-title">The Collection</h2>
+                    <p class="section-desc">Testing the Blob Button effect.</p>
+                </div>
+
+                <div class="glossy-product-grid">
+                    <!-- Product 1 -->
+                    <div class="glossy-card">
+                        <div class="glossy-card-bg">
+                            <img src="assets/bag-1.png" alt="Tan Crossbody">
+                        </div>
+                        <div class="glossy-overlay">
+                            <h3 class="glossy-card-name">Tan Crossbody</h3>
+                            <p class="glossy-card-desc">Premium vegetable-tanned leather</p>
+                            <span class="glossy-card-price">€ 850</span>
+                        </div>
+                        <div class="glossy-card-bottom">
+                            <button class="blob-btn">
+                                Add to Cart
+                                <span class="blob-btn__inner">
+                                    <span class="blob-btn__blobs">
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                    </span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="glossy-card">
+                        <div class="glossy-card-bg">
+                            <img src="assets/bag-2.png" alt="White Clutch">
+                        </div>
+                        <div class="glossy-overlay">
+                            <h3 class="glossy-card-name">White Clutch</h3>
+                            <p class="glossy-card-desc">Minimalist evening elegance</p>
+                            <span class="glossy-card-price">€ 620</span>
+                        </div>
+                        <div class="glossy-card-bottom">
+                            <button class="blob-btn">
+                                Add to Cart
+                                <span class="blob-btn__inner">
+                                    <span class="blob-btn__blobs">
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                        <span class="blob-btn__blob"></span>
+                                    </span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SVG Filter for Gooey Effect -->
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display: none;">
+        <defs>
+            <filter id="goo">
+                <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10"></feGaussianBlur>
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 21 -7" result="goo">
+                </feColorMatrix>
+                <feBlend in2="goo" in="SourceGraphic" result="mix"></feBlend>
+            </filter>
+        </defs>
+    </svg>
+
+    <script src="lenis.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.querySelectorAll('.blob-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const self = this;
+
+                // Trigger active state
+                self.classList.add('active');
+
+                // Revert after 3 seconds
+                setTimeout(() => {
+                    self.classList.remove('active');
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+
+</html>
