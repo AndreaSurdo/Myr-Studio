@@ -1210,6 +1210,11 @@ body.loaded .hero-curtain-right {
         margin-bottom: 150px;
     }
 
+    .heritage-title {
+        font-size: 7vh;
+        margin-bottom: 30px;
+    }
+
     /* Product */
     .product-page {
         padding-top: 100px;
