@@ -620,7 +620,11 @@ body.loaded .hero-curtain-right {
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
-    aspect-ratio: 3/4;
+    /* aspect-ratio: 3/4;  <-- Replaced with padding hack for better compatibility */
+    width: 100%;
+    height: 0;
+    padding-bottom: 133.33%;
+    /* 3:4 Aspect Ratio */
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.6);
     /* Added white border */
@@ -1007,6 +1011,14 @@ body.loaded .hero-curtain-right {
     letter-spacing: 1px;
 }
 
+.product-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 30px;
+}
+
 .add-to-cart-btn:hover {
     background-color: #333;
     transform: translateY(-2px);
@@ -1221,122 +1233,43 @@ body.loaded .hero-curtain-right {
     }
 
     .product-image-col {
+        flex: 1 1 100%;
         padding: 0 20px 20px 20px;
     }
 
+    .product-hero {
+        flex-direction: column;
+    }
+
+    .product-img-wrapper {
+        max-width: 100%;
+        aspect-ratio: 4/5;
+    }
+
     .product-details-col {
+        flex: 1 1 100%;
         padding: 0 20px 40px 20px;
+    }
+
+    .product-actions {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .product-actions .blob-btn {
+        flex: 1;
+        padding: 16px 5px !important;
+        width: auto !important;
+        font-size: 0.85rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
     }
 
     .product-title {
         font-size: 2.5rem;
-        opacity: 0;
-        transform: translateY(100px);
-        transition: opacity 1s, transform 1s;
-    }
-
-    .scrub-slide-up.active-scroll {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .delay-1 {
-        transition-delay: 0.1s;
-    }
-
-    .delay-2 {
-        transition-delay: 0.2s;
-    }
-
-    /* --- General Static Page Styles (Contact/Sustainability) --- */
-    .page-content {
-        min-height: 100vh;
-        padding: 160px 40px 100px 40px;
-        /* Top padding clears header */
-        max-width: 1200px;
-        margin: 0 auto;
-        color: #fff;
-        background-color: #111;
-        /* Fallback/Ensure dark theme */
-    }
-
-    .dark-theme {
-        background-color: #111;
-        color: #fff;
-    }
-
-    .page-title {
-        font-size: 6rem;
-        font-weight: 300;
-        text-transform: uppercase;
-        margin-bottom: 80px;
-        line-height: 1;
-    }
-
-    /* Text Layout (Sustainability) */
-    .text-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 80px;
-    }
-
-    .text-section h2 {
-        font-size: 2rem;
-        font-weight: 400;
-        margin-bottom: 20px;
-        color: #adadad;
-        /* Brand accent grey */
-        text-transform: uppercase;
-    }
-
-    .text-section p {
-        font-size: 1.2rem;
-        line-height: 1.6;
-        color: #ccc;
-        font-weight: 300;
-    }
-
-    /* Contact Layout */
-    .center-layout {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        min-height: 80vh;
-        /* Center vertically */
-    }
-
-    .contact-info {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 80px;
-    }
-
-    .info-block h3 {
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        color: #666;
-        margin-bottom: 15px;
-    }
-
-    .info-block .contact-link {
-        font-size: 2rem;
-        font-weight: 300;
-        text-decoration: none;
-        display: block;
-        margin: 0 0 10px 0;
-        color: #fff;
-        transition: color 0.3s;
-    }
-
-    .info-block .contact-link:hover {
-        color: #adadad;
-    }
-
-    .social-links {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
     }
 
     /* Reduce 'The Craft' title on mobile */
