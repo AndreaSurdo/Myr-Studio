@@ -81,11 +81,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Cart Logic - Now stores actual items
     const cartCountEl = document.getElementById('cart-count');
+    const cartCountMenuEl = document.getElementById('cart-count-menu');
 
     function updateCartCount() {
+        const cartItems = JSON.parse(localStorage.getItem('myr_cart_items') || '[]');
         if (cartCountEl) {
-            const cartItems = JSON.parse(localStorage.getItem('myr_cart_items') || '[]');
             cartCountEl.innerText = cartItems.length;
+        }
+        if (cartCountMenuEl) {
+            cartCountMenuEl.innerText = cartItems.length;
         }
     }
 
