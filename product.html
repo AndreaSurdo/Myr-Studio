@@ -319,6 +319,7 @@
 
         function openViewer() {
             modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scroll
             if (!scene) {
                 setTimeout(init3D, 100);
             } else {
@@ -331,6 +332,7 @@
 
         function closeViewer() {
             modalOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scroll
             if (animationId) {
                 cancelAnimationFrame(animationId);
                 animationId = null;
