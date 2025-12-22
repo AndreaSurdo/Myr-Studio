@@ -1276,4 +1276,39 @@ body.loaded .hero-curtain-right {
     .savoir-section-title {
         font-size: 3rem;
     }
+
+    /* Fix page-title overflow on mobile (Contact, etc.) */
+    .page-title {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* Page content padding for mobile */
+    .page-content {
+        padding: 120px 20px 60px 20px;
+        overflow-x: hidden;
+    }
+
+    /* Text grid single column on mobile */
+    .text-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    /* Contact info stack on mobile */
+    .contact-info {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .info-block .contact-link {
+        font-size: 1.3rem;
+    }
+
+    /* Map container responsive */
+    .map-container iframe {
+        height: 280px;
+    }
 }
