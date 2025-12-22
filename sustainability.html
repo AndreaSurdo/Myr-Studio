@@ -1,79 +1,128 @@
-<title>Sustainability - Myr-Studio</title>
-<link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
-    .hero-banner {
-        width: 100%;
-        height: 60vh;
-        position: relative;
-        overflow: hidden;
-        margin-bottom: 80px;
-    }
+<!DOCTYPE html>
+<html lang="en">
 
-    .hero-banner img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0.7;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainability - Myr-Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        .hero-banner {
+            width: 100%;
+            height: 60vh;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 80px;
+        }
 
-    .hero-banner-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 60px 40px;
-        background: linear-gradient(transparent, #111);
-    }
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
 
-    .hero-banner-title {
-        font-size: 5rem;
-        font-weight: 300;
-        text-transform: uppercase;
-        line-height: 1;
-    }
-
-    .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 40px;
-        margin: 80px 0;
-        text-align: center;
-    }
-
-    .stat-item {
-        padding: 40px;
-        border: 1px solid #333;
-        border-radius: 8px;
-    }
-
-    .stat-number {
-        font-size: 4rem;
-        font-weight: 300;
-        color: #adadad;
-        display: block;
-        margin-bottom: 10px;
-    }
-
-    .stat-label {
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: #666;
-    }
-
-    @media (max-width: 768px) {
-        .stat-grid {
-            grid-template-columns: 1fr;
+        .hero-banner-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 60px 40px;
+            background: linear-gradient(transparent, #111);
         }
 
         .hero-banner-title {
-            font-size: 10vw;
+            font-size: 5rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            line-height: 1;
         }
-    }
-</style>
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 40px;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 300;
+            color: #adadad;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+        }
+
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            .stat-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 40px 0;
+            }
+
+            .stat-item {
+                padding: 25px;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .hero-banner {
+                height: 40vh;
+                margin-bottom: 40px;
+            }
+
+            .hero-banner-overlay {
+                padding: 30px 20px;
+            }
+
+            .hero-banner-title {
+                font-size: 2.5rem;
+            }
+
+            /* Force text-grid to single column */
+            .text-grid {
+                display: block !important;
+            }
+
+            .text-section {
+                margin-bottom: 40px;
+            }
+
+            .text-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .text-section p {
+                font-size: 1rem;
+            }
+
+            /* Page content mobile adjustments */
+            .page-content {
+                padding: 20px !important;
+                padding-top: 0 !important;
+            }
+        }
+    </style>
 </head>
 
 <body class="is-loading dark-theme">
